@@ -14,8 +14,6 @@ navbar:
           - text: "Subway vs. Bus Ridership 2020"
           - href: Analysis2.html
           - text: "Time-Trend Regression"
-    - text: "Discussion and Conclusions"
-      href: Discussion and Conclusions.html
     - text: "Report"
       href: Report.html
     - icon: fa-github fa-lg
