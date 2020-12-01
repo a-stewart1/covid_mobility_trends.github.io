@@ -1,0 +1,38 @@
+---
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
+    code_folding: hide
+---
+
+# __Data__
+
+### Data Source 
+
+We used a publicly available dataset on [day-by-day ridership numbers](https://new.mta.info/coronavirus/ridership) from the MTA. The dataset contains information on total estimated ridership and percentage change from 2019 by day, beginning March 1, 2020. Estimates of ridership by subway, bus (local, limited, SBS, and Express), Long Island Rail Road, Metro-North Railroad, Access-A-Ride, and Bridges and Tunnels are all available, however, we decided to restrict our analysis to subway and bus ridership.   
+
+The dataset was downloaded as a .csv files and imported into RStudio. We then cleaned the variables names, verified that there were no missing values, and excluded the variables on the Long Island Rail Road, Metro-North Railroad, Access-A-Ride, and Bridges and Tunnels, which we did not plan to include in further data visualization and analysis. 
+
+### Data Cleaning 
+
+The dataset was downloaded as a .csv files and imported into RStudio. We then cleaned the variables names, verified that there were no missing values, and excluded the variables on the Long Island Rail Road, Metro-North Railroad, Access-A-Ride, and Bridges and Tunnels, which we did not plan to include in further data visualization and analysis. 
+
+```{r}
+## add data cleaning code 
+```
+
+Next, we calculated the 2019 ridership estimates for subway and buses based on the 2020 estimates and percentage change data. 
+
+```{r}
+## add data cleaning code 
+```
+
+
+
+
+
+
+
+
