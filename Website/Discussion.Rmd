@@ -4,10 +4,6 @@ output:
     toc: true
     toc_float: true
     theme: flatly
-    code_folding: hide
 ---
 
-# 2019 vs. 2020 Ridership: Regression 
-
-
-
+# Discussion 
