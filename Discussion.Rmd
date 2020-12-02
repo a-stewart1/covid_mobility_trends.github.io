@@ -1,4 +1,5 @@
 ---
+title: Discussion
 output: 
   html_document:
     toc: true
@@ -8,4 +9,3 @@ output:
 
 # Discussion 
 
-## This is the discussion section
