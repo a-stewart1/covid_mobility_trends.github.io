@@ -1,0 +1,36 @@
+---
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
+---
+
+# __About__
+
+
+### Motivation
+
+The COVID-19 pandemic and the “New York State on PAUSE” executive order, issued on March 14, 2020 to slow the spread of the virus, brought tremendous shock to the normally bustling city. Closed museums, theaters, and restaurants, suspended commutes, and ghost town-like scenes led some people to proclaim that New York City is [“over”](https://www.nytimes.com/2020/08/25/nyregion/nyc-coronavirus-reopening.html?searchResultPosition=43) as we know it. This project intended to explore the influence of COVID-19 on human mobility trends in NYC and mobility trends throughout the pandemic as measured by MTA ridership on subway trains and buses. 
+
+Mobility trends may be associated with both COVID-19 infection and economic implications associated with consumer spending. Thus, understanding mobility trends is crucial in order to guide policymakers, transit, and health departments as they make decisions related to stay-at-home orders in light of COVID-19. 
+
+### Related work
+
+* “Is New York City ‘Over’?”. New York Times, August 25, 2020. [Link.](https://www.nytimes.com/2020/08/25/nyregion/nyc-coronavirus-reopening.html?searchResultPosition=43) 
+* COVID-10 Mobility Network Modeling. Stanford University. [Link.](https://covid-mobility.stanford.edu/)
+* Facebook Data for Good Mobility Dashboard. COVID-19 Mobility Data Network. [Link.](https://visualization.covid19mobility.org/?date=2020-11-26&dates=2020-08-26_2020-11-26&region=36)
+
+### Research Questions 
+
+* How does MTA subway ridership March-December 2019 differ from MTA subway ridership March-December 2020? 
+* How has subway ridership differed from bus ridership during the pandemic (March to December 2020)? 
+
+
+### Screencast 
+
+
+
+
+
+
