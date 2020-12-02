@@ -7,3 +7,5 @@ output:
 ---
 
 # Discussion 
+
+## This is the discussion section
