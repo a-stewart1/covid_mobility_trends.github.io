@@ -10,14 +10,10 @@ output:
 
 # MTA Ridership Mobility Trends 2019 and 2020
 
-<<<<<<< HEAD
-### Description 
-
 The following figures compare data from both subway and bus ridership trends in 2019 and 2020.  
 
 Visualization of mobility changes and differences between 2019 and 2019 before conducting statistical analyses. 
 =======
->>>>>>> 27c6f5f48288e65aecf5c657ad49b0c0158edd75
 
 ```{r, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -181,6 +177,5 @@ ggplotly(plot_bus_2)
 plot_bus
 plot_subway
 (plot_bus_2+plot_subway_2) 
-
 ```
 
