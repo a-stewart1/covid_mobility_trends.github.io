@@ -10,7 +10,9 @@ output:
 
 # MTA Ridership Mobility Trends 2019 and 2020
 
-The following figures compare data from both subway and bus ridership trends in 2019 and 2020.  
+We first implemented an exploratory analysis of subway and bus MTA ridership trends in 2019 and 2020.  
+
+After initial data cleaning, we changed the date from character to date format and then created a text_label dataset to show percent change from 2019-2020 when hovered on the graph. Then, we created a dataset with variables related to subway and pivoted it so it could be correctly graphed by year. We then merged the subway database with the text_label dataset. Then using plotly, we plotted the general trends of subway ridership per day from March - November. To visualize the ridership trends within the context of the COVID-19 pandemic, we added vertical lines that indicate the first diagnosed COVID-19 case in New York City (3/1/2020), and the days NYC cumulative cases hit 100,000 (04/07) and 200,000 (05/26).
 
 ```{r include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -166,4 +168,11 @@ plot_bus
 plot_subway
 (plot_bus_2+plot_subway_2)
 ```
+
+From these plots, we can see that the ridership values in March 2020 are similar to those of ridership in March 2019 for both buses and subways. However, from mid-March onward there are overall reduced ridership trends in 2020 as compared to 2019 for both forms of transit. These trends in reduced ridership align with the "New York on PAUSE" executive order, which caused many people to stop using public transportation.  
+
+In the first plot of bus ridership trends, there appears to be a continuous drop in ridership between the first COVID-19 case on March 1, 2020 and April 1, 2020. This trend is followed by an increase in ridership in April through July 2020 and then subsequently a broadening of the range of values around August 2020, with some reductions in values and others remaining generally constant. From the 2019 estimates, we also notice many outlying lower values, produced by decreased bus ridership on Thursdays and Fridays. This is likely a result of fewer commuters on those days. 
+
+The trends in subway ridership, as depicted by the second plot, show some similarities to the bus ridership trends, although there are fewer overlapping values when comparing the years 2019 and 2020. The increase in subway ridership, beginning around April 2020 is also less extreme than the increase in bus ridership and there is a more narrow range of values in the 2020 subway ridership as compared to bus ridership. Finally, the 2020 subway ridership does not appear to be decreasing in recent months as with bus ridership. These trends suggest that as people began to use public transportation again during the pandemic, fewer people chose to use the subway as compared to buses. 
+ 
 
