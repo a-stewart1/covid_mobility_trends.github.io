@@ -1,5 +1,5 @@
 ---
-title: About
+title: 
 output: 
   html_document:
     toc: true
@@ -7,7 +7,9 @@ output:
     theme: flatly
 ---
 
+# About 
 
+![](images/200430-new-york-subway-ew-1235p_08a2968cb59418529191b5d2bd30de9c.fit-760w.jpg) 
 
 ### Motivation
 

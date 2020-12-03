@@ -9,6 +9,8 @@ navbar:
       href: Data.html
     - text: "Analysis"
       menu: 
+        - text: "Mobility Trends"
+          hef: Analysis3.html 
         - text: "Ridership 2019 vs. 2020"
           href: Analysis1.html
         - text: "Subway vs. Bus Ridership 2020"

@@ -11,7 +11,7 @@
 
 
 
-<title>data</title>
+<title>Data.utf8</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -406,7 +406,6 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">data</h1>
 
 </div>
 
@@ -421,9 +420,33 @@ div.tocify {
 <div id="data-cleaning" class="section level3">
 <h3>Data Cleaning</h3>
 <p>The dataset was downloaded as a .csv files and imported into RStudio. We then cleaned the variables names, verified that there were no missing values, and excluded the variables on the Long Island Rail Road, Metro-North Railroad, Access-A-Ride, and Bridges and Tunnels, which we did not plan to include in further data visualization and analysis.</p>
-<pre class="r"><code>## add data cleaning code </code></pre>
+<pre class="r"><code>mta_data = read_csv (file = &quot;./data/MTA_recent_ridership_data_20201123_0.csv&quot;,
+                     col_types = cols(
+                       date = col_date(format = &quot;%mm/%dd/%yy&quot;),
+                       `Subways: % Change From 2019 Equivalent Day` = col_number(),
+                       `Buses: % Change From 2019 Equivalent Day` = col_number(),
+                       `Bridges and Tunnels: % Change From 2019 Equivalent Day` = col_number()
+                       ) #only changed the formats of important variables 
+) %&gt;%
+  janitor::clean_names()
+skimr::skim(mta_data)
+mta_data =
+  mta_data %&gt;%
+  subset(select = -c(lirr_total_estimated_ridership, lirr_percent_change_from_2019_monthly_weekday_saturday_sunday_average, metro_north_total_estimated_ridership, metro_north_percent_change_from_2019_monthly_weekday_saturday_sunday_average, access_a_ride_total_scheduled_trips, access_a_ride_percent_change_from_2019_monthly_weekday_saturday_sunday_average, bridges_and_tunnels_total_traffic, bridges_and_tunnels_percent_change_from_2019_equivalent_day))
+#exclude data for lirr, metronorth, access-a-ride, bridges &amp; tunnel</code></pre>
 <p>Next, we calculated the 2019 ridership estimates for subway and buses based on the 2020 estimates and percentage change data.</p>
-<pre class="r"><code>## add data cleaning code </code></pre>
+<pre class="r"><code>mta_data = mta_data %&gt;%
+  mutate( 
+    &#39;subway_2019&#39; = subways_total_estimated_ridership/(1+(subways_percent_change_from_2019_equivalent_day/100)),
+    &#39;bus_2019&#39;=
+      buses_total_estimated_ridership/(1+(buses_percent_change_from_2019_equivalent_day/100))
+    ) %&gt;%
+  rename(
+    &quot;subway_2020&quot; = subways_total_estimated_ridership,
+    &quot;subway_pct_change&quot; = subways_percent_change_from_2019_equivalent_day,
+    &quot;bus_2020&quot; = buses_total_estimated_ridership,
+    &quot;bus_pct_change&quot; = buses_percent_change_from_2019_equivalent_day
+    )</code></pre>
 </div>
 </div>
 

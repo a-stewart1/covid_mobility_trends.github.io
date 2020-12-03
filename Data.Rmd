@@ -1,5 +1,5 @@
 ---
-title: data
+title: 
 output: 
   html_document:
     toc: true
@@ -20,15 +20,72 @@ The dataset was downloaded as a .csv files and imported into RStudio. We then cl
 
 The dataset was downloaded as a .csv files and imported into RStudio. We then cleaned the variables names, verified that there were no missing values, and excluded the variables on the Long Island Rail Road, Metro-North Railroad, Access-A-Ride, and Bridges and Tunnels, which we did not plan to include in further data visualization and analysis. 
 
-```{r}
-## add data cleaning code 
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(patchwork)
+library(readr)
+library(broom)
+library(dbplyr)
+library(viridis)
+library(reshape2)
+library(plotly)
+library(lubridate)
+
+knitr::opts_chunk$set(
+	echo = TRUE,
+	warning = FALSE,
+	fig.width = 8, 
+  fig.height = 6,
+  out.width = "90%"
+)
+
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+```
+
+
+```{r, results=FALSE}
+mta_data = read_csv (file = "./data/MTA_recent_ridership_data_20201123_0.csv",
+                     col_types = cols(
+                       date = col_date(format = "%mm/%dd/%yy"),
+                       `Subways: % Change From 2019 Equivalent Day` = col_number(),
+                       `Buses: % Change From 2019 Equivalent Day` = col_number(),
+                       `Bridges and Tunnels: % Change From 2019 Equivalent Day` = col_number()
+                       ) #only changed the formats of important variables 
+) %>%
+  janitor::clean_names()
+skimr::skim(mta_data)
+mta_data =
+  mta_data %>%
+  subset(select = -c(lirr_total_estimated_ridership, lirr_percent_change_from_2019_monthly_weekday_saturday_sunday_average, metro_north_total_estimated_ridership, metro_north_percent_change_from_2019_monthly_weekday_saturday_sunday_average, access_a_ride_total_scheduled_trips, access_a_ride_percent_change_from_2019_monthly_weekday_saturday_sunday_average, bridges_and_tunnels_total_traffic, bridges_and_tunnels_percent_change_from_2019_equivalent_day))
+#exclude data for lirr, metronorth, access-a-ride, bridges & tunnel
 ```
 
 Next, we calculated the 2019 ridership estimates for subway and buses based on the 2020 estimates and percentage change data. 
 
 ```{r}
-## add data cleaning code 
+mta_data = mta_data %>%
+  mutate( 
+    'subway_2019' = subways_total_estimated_ridership/(1+(subways_percent_change_from_2019_equivalent_day/100)),
+    'bus_2019'=
+      buses_total_estimated_ridership/(1+(buses_percent_change_from_2019_equivalent_day/100))
+    ) %>%
+  rename(
+    "subway_2020" = subways_total_estimated_ridership,
+    "subway_pct_change" = subways_percent_change_from_2019_equivalent_day,
+    "bus_2020" = buses_total_estimated_ridership,
+    "bus_pct_change" = buses_percent_change_from_2019_equivalent_day
+    )
 ```
+
 
 
 
