@@ -9,16 +9,16 @@ navbar:
       href: Data.html
     - text: "Analysis"
       menu: 
-          - text: "Ridership 2019 vs. 2020"
-            href: Analysis1.html
-          - text: "Subway vs. Bus Ridership 2020"
-            href: Analysis2.html
+    - text: "Ridership 2019 vs. 2020"
+      href: Analysis1.html
+    - text: "Subway vs. Bus Ridership 2020"
+      href: Analysis2.html
     - text: "Discussion"
       href: Discussion.html
     - text: "Report"
       href: Report.html
     - icon: fa-github fa-lg
-      href: https://github.com/mjl2241/p8105_final_p
+      href: https://github.com/a-stewart1/covid_mobility_trends.github.io.git
 output:
   html_document:
     theme: flatly

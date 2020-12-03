@@ -11,7 +11,7 @@
 
 
 
-<title>index.utf8</title>
+<title>data</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -23,6 +23,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -250,6 +251,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -358,32 +362,24 @@ div.tocify {
 <li>
   <a href="Data.html">Data</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Analysis
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="Analysis1.html">Ridership 2019 vs. 2020</a>
-    </li>
-    <li>
-      <a href="Analysis2.html">Subway vs. Bus Ridership 2020</a>
-    </li>
-    <li>
-      <a href="Analysis3.html">Time-Trend Regression</a>
-    </li>
-  </ul>
+<li class="dropdown-header">Analysis</li>
+<li>
+  <a href="Analysis1.html">Ridership 2019 vs. 2020</a>
 </li>
 <li>
-  <a href="Discussion and Conclusions.html">Discussion and Conclusions</a>
+  <a href="Analysis2.html">Subway vs. Bus Ridership 2020</a>
+</li>
+<li>
+  <a href="Discussion.html">Discussion</a>
 </li>
 <li>
   <a href="Report.html">Report</a>
 </li>
 <li>
-  <a href="https://github.com/mjl2241/p8105_final_p">
+  <a></a>
+</li>
+<li>
+  <a href="https://github.com/a-stewart1/covid_mobility_trends.github.io.git">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -395,17 +391,35 @@ div.tocify {
 
 <div class="fluid-row" id="header">
 
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
+
+<h1 class="title toc-ignore">data</h1>
 
 </div>
 
 
-<div id="covid-19-mobility-trends-in-nyc" class="section level3">
-<h3><strong>COVID-19 Mobility Trends in NYC</strong></h3>
-<p>An Exploration of the Impact of the COVID-19 Pandemic on Mobility as Measured by MTA Ridership</p>
-<p><img src="Images/subway_nyc.jpeg" /></p>
-<p><em>Contributors: Julián Ponce, Michelle Lee, Adarsh Ramakrishnan, Allison Stewart, Aishwarya Anuraj</em></p>
+<div id="data" class="section level1">
+<h1><strong>Data</strong></h1>
+<div id="data-source" class="section level3">
+<h3>Data Source</h3>
+<p>We used a publicly available dataset on <a href="https://new.mta.info/coronavirus/ridership">day-by-day ridership numbers</a> from the MTA. The dataset contains information on total estimated ridership and percentage change from 2019 by day, beginning March 1, 2020. Estimates of ridership by subway, bus (local, limited, SBS, and Express), Long Island Rail Road, Metro-North Railroad, Access-A-Ride, and Bridges and Tunnels are all available, however, we decided to restrict our analysis to subway and bus ridership.</p>
+<p>The dataset was downloaded as a .csv files and imported into RStudio. We then cleaned the variables names, verified that there were no missing values, and excluded the variables on the Long Island Rail Road, Metro-North Railroad, Access-A-Ride, and Bridges and Tunnels, which we did not plan to include in further data visualization and analysis.</p>
+</div>
+<div id="data-cleaning" class="section level3">
+<h3>Data Cleaning</h3>
+<p>The dataset was downloaded as a .csv files and imported into RStudio. We then cleaned the variables names, verified that there were no missing values, and excluded the variables on the Long Island Rail Road, Metro-North Railroad, Access-A-Ride, and Bridges and Tunnels, which we did not plan to include in further data visualization and analysis.</p>
+<pre class="r"><code>## add data cleaning code </code></pre>
+<p>Next, we calculated the 2019 ridership estimates for subway and buses based on the 2020 estimates and percentage change data.</p>
+<pre class="r"><code>## add data cleaning code </code></pre>
+</div>
 </div>
 
 
@@ -443,6 +457,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {

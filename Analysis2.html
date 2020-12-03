@@ -11,7 +11,7 @@
 
 
 
-<title>about.utf8</title>
+<title>Analysis2</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -23,6 +23,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -250,6 +251,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -358,29 +362,24 @@ div.tocify {
 <li>
   <a href="Data.html">Data</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Analysis
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Ridership 2019 vs. 2020</li>
-    <li>
-      <a href="Analysis1.html"></a>
-    </li>
-    <li class="dropdown-header">Subway vs. Bus Ridership 2020</li>
-    <li>
-      <a href="Analysis2.html"></a>
-    </li>
-    <li class="dropdown-header">Time-Trend Regression</li>
-  </ul>
+<li class="dropdown-header">Analysis</li>
+<li>
+  <a href="Analysis1.html">Ridership 2019 vs. 2020</a>
+</li>
+<li>
+  <a href="Analysis2.html">Subway vs. Bus Ridership 2020</a>
+</li>
+<li>
+  <a href="Discussion.html">Discussion</a>
 </li>
 <li>
   <a href="Report.html">Report</a>
 </li>
 <li>
-  <a href="https://github.com/mjl2241/p8105_final_p">
+  <a></a>
+</li>
+<li>
+  <a href="https://github.com/a-stewart1/covid_mobility_trends.github.io.git">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -392,37 +391,23 @@ div.tocify {
 
 <div class="fluid-row" id="header">
 
-
-
-
-</div>
-
-
-<div id="about" class="section level1">
-<h1><strong>About</strong></h1>
-<div id="motivation" class="section level3">
-<h3>Motivation</h3>
-<p>The COVID-19 pandemic and the “New York State on PAUSE” executive order, issued on March 14, 2020 to slow the spread of the virus, brought tremendous shock to the normally bustling city. Closed museums, theaters, and restaurants, suspended commutes, and ghost town-like scenes led some people to proclaim that New York City is <a href="https://www.nytimes.com/2020/08/25/nyregion/nyc-coronavirus-reopening.html?searchResultPosition=43">“over”</a> as we know it. This project intended to explore the influence of COVID-19 on human mobility trends in NYC and mobility trends throughout the pandemic as measured by MTA ridership on subway trains and buses.</p>
-<p>Mobility trends may be associated with both COVID-19 infection and economic implications associated with consumer spending. Thus, understanding mobility trends is crucial in order to guide policymakers, transit, and health departments as they make decisions related to stay-at-home orders in light of COVID-19.</p>
-</div>
-<div id="related-work" class="section level3">
-<h3>Related work</h3>
-<ul>
-<li>“Is New York City ‘Over’?”. New York Times, August 25, 2020. <a href="https://www.nytimes.com/2020/08/25/nyregion/nyc-coronavirus-reopening.html?searchResultPosition=43">Link.</a></li>
-<li>COVID-10 Mobility Network Modeling. Stanford University. <a href="https://covid-mobility.stanford.edu/">Link.</a></li>
-<li>Facebook Data for Good Mobility Dashboard. COVID-19 Mobility Data Network. <a href="https://visualization.covid19mobility.org/?date=2020-11-26&amp;dates=2020-08-26_2020-11-26&amp;region=36">Link.</a></li>
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
 </div>
-<div id="research-questions" class="section level3">
-<h3>Research Questions</h3>
-<ul>
-<li>How does MTA subway ridership March-December 2019 differ from MTA subway ridership March-December 2020?</li>
-<li>How has subway ridership differed from bus ridership during the pandemic (March to December 2020)?</li>
-</ul>
+
+
+
+<h1 class="title toc-ignore">Analysis2</h1>
+
 </div>
-<div id="screencast" class="section level3">
-<h3>Screencast</h3>
-</div>
+
+
+<div id="subway-ridership-vs.-2020-bus-ridership-two-sample-t-test" class="section level1">
+<h1>2020 Subway Ridership vs. 2020 Bus Ridership: Two-Sample T-test</h1>
 </div>
 
 
@@ -460,6 +445,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {
