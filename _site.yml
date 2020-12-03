@@ -10,7 +10,7 @@ navbar:
     - text: "Analysis"
       menu: 
         - text: "Mobility Trends"
-          href: Analysis3.html 
+          href: Trends.html 
         - text: "T-Test"
           href: Analysis1.html
         - text: "Regression"

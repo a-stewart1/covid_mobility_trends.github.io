@@ -12,10 +12,7 @@ output:
 
 The following figures compare data from both subway and bus ridership trends in 2019 and 2020.  
 
-Visualization of mobility changes and differences between 2019 and 2019 before conducting statistical analyses. 
-=======
-
-```{r, include=FALSE}
+```{r include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(patchwork)
@@ -44,7 +41,9 @@ scale_colour_discrete = scale_colour_viridis_d
 scale_fill_discrete = scale_fill_viridis_d
 
 theme_set(theme_minimal() + theme(legend.position = "bottom"))
+```
 
+```{r include=FALSE}
 mta_data = read_csv (file = "./data/MTA_recent_ridership_data_20201123_0.csv",
                      col_types = cols(
                        date = col_date(format = "%mm/%dd/%yy"),
@@ -59,10 +58,7 @@ mta_data =
   mta_data %>%
   subset(select = -c(lirr_total_estimated_ridership, lirr_percent_change_from_2019_monthly_weekday_saturday_sunday_average, metro_north_total_estimated_ridership, metro_north_percent_change_from_2019_monthly_weekday_saturday_sunday_average, access_a_ride_total_scheduled_trips, access_a_ride_percent_change_from_2019_monthly_weekday_saturday_sunday_average, bridges_and_tunnels_total_traffic, bridges_and_tunnels_percent_change_from_2019_equivalent_day))
 #exclude data for lirr, metronorth, access-a-ride, bridges & tunnel
-```
 
-
-``` {r, include=FALSE}
 mta_data = mta_data %>%
   mutate( 
     'subway_2019' = subways_total_estimated_ridership/(1+(subways_percent_change_from_2019_equivalent_day/100)),
@@ -77,8 +73,7 @@ mta_data = mta_data %>%
     )
 ```
 
-
-```{r, include=FALSE}
+```{r results='hide', message=FALSE}
 #change date to date format and order by date
 mta_data =
   mta_data %>%
@@ -131,10 +126,6 @@ plot_bus =
   add_lines(x =as.Date("2020-04-07"), line = list(dash="dot", color = 'red', width=0.5, alpha = 0.5),name = '100K cases in NYC on 04/07') %>%
   add_lines(x =as.Date("2020-05-26"), line = list(dash="dot", color = 'red', width=0.5, alpha = 0.5),name = '200K cases in NYC on 05/26')
 
-```
-
-
-```{r, include=FALSE}
 #ggplot for subway
 plot_subway_2 = 
   mta_data %>%
@@ -150,10 +141,7 @@ plot_subway_2 =
   geom_text(x=as.Date("2020-04-07"), y=6100000, label ='100K cases', angle=90, vjust = 1.2, size=3,color='black')+
   geom_text(x=as.Date("2020-05-26"), y=6100000, label ='200K cases', angle=90, vjust = 1.2, size=3,color='black')
 ggplotly(plot_subway_2)
-```
 
-
-```{r, include=FALSE}
 #ggplot for bus
 plot_bus_2 = 
   mta_data %>%
@@ -161,7 +149,7 @@ plot_bus_2 =
   melt(., id.vars = "date") %>% 
   ggplot(aes(x=date, y=value, color=variable)) +
   geom_point(alpha=0.5) +
-  geom_smooth(se = FALSE) +
+  geom_smooth(se = FALSE) +  
   geom_vline(xintercept=as.Date("2020-03-01"), linetype="dotted", color = 'red')+
   geom_vline(xintercept=as.Date("2020-04-07"), linetype="dotted", color = 'red')+
   geom_vline(xintercept=as.Date("2020-05-26"), linetype="dotted", color = 'red')+
@@ -176,6 +164,6 @@ ggplotly(plot_bus_2)
 #see the two graphs together:
 plot_bus
 plot_subway
-(plot_bus_2+plot_subway_2) 
+(plot_bus_2+plot_subway_2)
 ```
 
