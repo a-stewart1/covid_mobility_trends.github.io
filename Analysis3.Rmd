@@ -10,9 +10,6 @@ output:
 
 # MTA Ridership Mobility Trends 2019 and 2020
 
-### Description 
-
-Visualization of mobility changes and differences between 2019 and 2019 before conducting statistical analyses. 
 
 ```{r, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -132,9 +129,8 @@ plot_bus =
 
 ```
 
-### Subway Ridership Trends 2019 and 2020
 
-```{r, message=FALSE}
+```{r, include=FALSE}
 #ggplot for subway
 plot_subway_2 = 
   mta_data %>%
@@ -152,9 +148,8 @@ plot_subway_2 =
 ggplotly(plot_subway_2)
 ```
 
-### Bus Ridership Trends 2019 and 2020 
 
-```{r, message=FALSE}
+```{r, include=FALSE}
 #ggplot for bus
 plot_bus_2 = 
   mta_data %>%
@@ -171,6 +166,9 @@ plot_bus_2 =
   geom_text(x=as.Date("2020-05-26"), y=2400000, label ='200K cases', angle=90, vjust = 1.2, size=3,color='black')
 ggplotly(plot_bus_2)
 
+```
+
+```{r message=FALSE}
 #see the two graphs together:
 plot_bus
 plot_subway
