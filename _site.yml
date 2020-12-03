@@ -12,7 +12,7 @@ navbar:
         - text: "Mobility Trends"
           href: Trends.html 
         - text: "T-Test"
-          href: Analysis1.html
+          href: ttest.html
         - text: "Regression"
           href: Analysis2.html
     - text: "Discussion"
