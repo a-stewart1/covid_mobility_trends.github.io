@@ -12,6 +12,8 @@ output:
 
 ### Description 
 
+The following figures compare data from both subway and bus ridership trends in 2019 and 2020.  
+
 Visualization of mobility changes and differences between 2019 and 2019 before conducting statistical analyses. 
 
 ```{r, include=FALSE}
@@ -158,11 +160,11 @@ ggplotly(plot_subway_2)
 #ggplot for bus
 plot_bus_2 = 
   mta_data %>%
-  select(bus_2020, bus_2019,date) %>%
+  select(bus_2019, bus_2020,date) %>%
   melt(., id.vars = "date") %>% 
   ggplot(aes(x=date, y=value, color=variable)) +
   geom_point(alpha=0.5) +
-  geom_smooth(se = FALSE) +  
+  geom_smooth(se = FALSE) +
   geom_vline(xintercept=as.Date("2020-03-01"), linetype="dotted", color = 'red')+
   geom_vline(xintercept=as.Date("2020-04-07"), linetype="dotted", color = 'red')+
   geom_vline(xintercept=as.Date("2020-05-26"), linetype="dotted", color = 'red')+
@@ -174,6 +176,7 @@ ggplotly(plot_bus_2)
 #see the two graphs together:
 plot_bus
 plot_subway
-(plot_bus_2+plot_subway_2)
+(plot_bus_2+plot_subway_2) 
+
 ```
 
