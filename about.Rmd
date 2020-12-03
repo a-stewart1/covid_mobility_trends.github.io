@@ -25,8 +25,10 @@ Mobility trends may be associated with both COVID-19 infection and economic impl
 
 ### Research Questions 
 
-* How does MTA subway ridership March-December 2019 differ from MTA subway ridership March-December 2020? 
-* How has subway ridership differed from bus ridership during the pandemic (March to December 2020)? 
+Originally, we planned to use Apple Mobility Trend data but we decided to use MTA data due to more appropriate variables. The Apple data only provided percentage change values and not the crude numbers of ridership. 
+
+* Does average MTA subway ridership March-December 2019 differ from average MTA subway ridership March-December 2020?
+* Does subway ridership differ from bus ridership during the COVID-19 pandemic (March to December 2020)? 
 
 
 ### Screencast 

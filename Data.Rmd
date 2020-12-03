@@ -18,7 +18,7 @@ The dataset was downloaded as a .csv files and imported into RStudio. We then cl
 
 ### Data Cleaning 
 
-The dataset was downloaded as a .csv files and imported into RStudio. We then cleaned the variables names, verified that there were no missing values, and excluded the variables on the Long Island Rail Road, Metro-North Railroad, Access-A-Ride, and Bridges and Tunnels, which we did not plan to include in further data visualization and analysis. 
+The dataset was downloaded as a .csv file and imported into RStudio. We then cleaned the variables names, verified that there were no missing values, and excluded the variables on the Long Island Rail Road, Metro-North Railroad, Access-A-Ride, and Bridges and Tunnels, which we did not plan to include in further data visualization and analysis. 
 
 ```{r, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -69,7 +69,7 @@ mta_data =
 #exclude data for lirr, metronorth, access-a-ride, bridges & tunnel
 ```
 
-Next, we calculated the 2019 ridership estimates for subway and buses based on the 2020 estimates and percentage change data. 
+Next, we calculated the 2019 ridership estimates for subway and buses based on the 2020 estimates and percentage change data. The 2019 estimates were calculated by (1) changing the percent change to decimal, (2) adding 1, (3) dividing 2020 ridership by the resulting value from step 2 to produce the 2019 ridership estimate.
 
 ```{r}
 mta_data = mta_data %>%
