@@ -6,6 +6,7 @@ output:
     toc_float: true
     theme: flatly
 ---
+<br>
 
 # About 
 
@@ -22,7 +23,7 @@ output:
 ### Related Work 
 
   Understanding trends in ridership is important as it may be associated with COVID-19 transmission as well as economic implications such as consumer spending. 
-[Past studies](https://covid-mobility.stanford.edu/) have predicted higher infection rates among disadvantaged racial and socioeconomic groups solely from differences in mobility data. [Simlar studies](https://visualization.covid19mobility.org/?date=2020-11-26&dates=2020-08-26_2020-11-26&region=36) have focused on mobility trends at the county level and fail to look at mobility trends by sector. Our study adds to this important topic as it compares mobility trends by means of transportation (bus, subway). 
+[Past studies](https://covid-mobility.stanford.edu/) have predicted higher infection rates among disadvantaged racial and socioeconomic groups solely from differences in mobility data. [Similar studies](https://visualization.covid19mobility.org/?date=2020-11-26&dates=2020-08-26_2020-11-26&region=36) have focused on mobility trends at the county level and fail to look at mobility trends by sector. Our study adds to this important topic as it compares mobility trends by means of transportation (bus, subway). 
 
   Understanding this important issue could provide insight to policymakers, transit authorities, and health departments as they make decisions related to transmission of COVID-19 and modifications to public transportation systems in light of stay-at-home orders.
 

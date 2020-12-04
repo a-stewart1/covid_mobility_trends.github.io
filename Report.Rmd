@@ -7,6 +7,7 @@ output:
     theme: flatly
     code_folding: hide
 ---
+<br>
 
 # __COVID-19 Mobility Trends in NYC__:
 ## An Exploration of the Impact of the COVID-19 Pandemic on Mobility as Measured by MTA Ridership
@@ -17,15 +18,16 @@ output:
 
 The central artery of New York City, the public transportation system is central to the cultural and economic well-being. Among its usual million daily users such as hip hop dancers, Wall Street executives, and the famous [pizza rat](https://www.cnn.com/2015/09/22/living/pizza-rat-feat/index.html), the subway proves to be more than a means of transport; it is a way of life. 
 
-  Unfortunately, the COVID-19 pandemic and the “New York State on PAUSE” executive order, issued on March 14, 2020 aimed to slow the spread of the virus, brought tremendous shock to the normal bustle of New York City. Closed museums, theaters, restaurants, and suspended commutes have created ghost town-like scenes and some people to proclaim that New York City is [“over”](https://www.nytimes.com/2020/08/25/nyregion/nyc-coronavirus-reopening.html?searchResultPosition=43) as we know it. 
+Unfortunately, the COVID-19 pandemic and the “New York State on PAUSE” executive order, issued on March 14, 2020 aimed to slow the spread of the virus, brought tremendous shock to the normal bustle of New York City. Closed museums, theaters, restaurants, and suspended commutes have created ghost town-like scenes and some people to proclaim that New York City is [“over”](https://www.nytimes.com/2020/08/25/nyregion/nyc-coronavirus-reopening.html?searchResultPosition=43) as we know it. 
 
-  This project moves forward with the aim of understanding the influence of the COVID-19 pandemic on human mobility trends in NYC as measured by MTA ridership on subway trains and buses from March to December 2019 and 2020.  
+This project moves forward with the aim of understanding the influence of the COVID-19 pandemic on human mobility trends in NYC as measured by MTA ridership on subway trains and buses from March to December 2019 and 2020.  
+
 
 ### Related work
 
-  Understanding trends in ridership is important as it may be associated with COVID-19 transmission as well as economic implications such as consumer spending. [Past studies](https://covid-mobility.stanford.edu/) have predicted higher infection rates among disadvantaged racial and socioeconomic groups solely from differences in mobility data. [Simlar studies](https://visualization.covid19mobility.org/?date=2020-11-26&dates=2020-08-26_2020-11-26&region=36) have focused on mobility trends at the county level and fail to look at mobility trends by sector. Our study adds to this important topic as it compares mobility trends by means of transportation (bus, subway). 
+Understanding trends in ridership is important as it may be associated with COVID-19 transmission as well as economic implications such as consumer spending. [Past studies](https://covid-mobility.stanford.edu/) have predicted higher infection rates among disadvantaged racial and socioeconomic groups solely from differences in mobility data. [Similar studies](https://visualization.covid19mobility.org/?date=2020-11-26&dates=2020-08-26_2020-11-26&region=36) have focused on mobility trends at the county level and fail to look at mobility trends by sector. Our study adds to this important topic as it compares mobility trends by means of transportation (bus, subway). 
 
-  Understanding this important issue could provide insight to policymakers, transit authorities, and health departments as they make decisions related to transmission of COVID-19 and modifications to public transportation systems in light of stay-at-home orders.
+Understanding this important issue could provide insight to policymakers, transit authorities, and health departments as they make decisions related to transmission of COVID-19 and modifications to public transportation systems in light of stay-at-home orders.
   
 ### Research Questions 
 
@@ -116,9 +118,9 @@ mta_data = mta_data %>%
 
 ### Exploratory Analysis 
 
-We first implemented an exploratory analysis of subway and bus MTA ridership trends in 2019 and 2020.  
+|           We first implemented an exploratory analysis of subway and bus MTA ridership trends in 2019 and 2020.  
 
-After initial data cleaning, we changed the date from character to date format and then created a text_label dataset to show percent change from 2019-2020 when hovered on the graph. Then, we created a dataset with variables related to subway and pivoted it so it could be correctly graphed by year. We then merged the subway database with the text_label dataset. Then using plotly, we plotted the general trends of subway ridership per day from March - November. To visualize the ridership trends within the context of the COVID-19 pandemic, we added vertical lines that indicate the first diagnosed COVID-19 case in New York City (3/1/2020), and the days NYC cumulative cases hit 100,000 (04/07) and 200,000 (05/26).
+|           After initial data cleaning, we changed the date from character to date format and then created a text_label dataset to show percent change from 2019-2020 when hovered on the graph. Then, we created a dataset with variables related to subway and pivoted it so it could be correctly graphed by year. We then merged the subway database with the text_label dataset. Then using plotly, we plotted the general trends of subway ridership per day from March - November. To visualize the ridership trends within the context of the COVID-19 pandemic, we added vertical lines that indicate the first diagnosed COVID-19 case in New York City (3/1/2020), and the days NYC cumulative cases hit 100,000 (04/07) and 200,000 (05/26).
 
 ```{r include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
