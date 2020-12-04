@@ -265,4 +265,4 @@ plot_ly(
     yaxis = list(title="Average Ridership"))
 ```
 
-The results indicate that there is a statistically difference between subway ridership trends in 2019 as compared to 2020 for every month. 
+The results indicate that there is a statistically significant difference between subway ridership trends in 2019 as compared to 2020 for every month. 
