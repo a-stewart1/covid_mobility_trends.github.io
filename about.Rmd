@@ -13,17 +13,19 @@ output:
 
 ### Motivation
 
-The central artery of New York City, the public transportation system is central to the cultural and economic well being of the city. Among its usual million daily users such as hip hop dancers, Wall Street executives, and the famous [pizza rat](https://www.cnn.com/2015/09/22/living/pizza-rat-feat/index.html), the subway proves to be more than a means of transport, it is a way of life. 
+The central artery of New York City, the public transportation system is central to the cultural and economic its well being. Among its usual million daily users such as hip hop dancers, Wall Street executives, and the famous [pizza rat](https://www.cnn.com/2015/09/22/living/pizza-rat-feat/index.html), the subway proves to be more than a means of transport, it is a way of life. 
 
-Unfortunately, the COVID-19 pandemic and the “New York State on PAUSE” executive order, issued on March 14, 2020 to slow the spread of the virus, brought tremendous shock to the normal bustle of New York city. Closed museums, theaters, and restaurants, suspended commutes, and ghost town-like scenes led some people to proclaim that New York City is [“over”](https://www.nytimes.com/2020/08/25/nyregion/nyc-coronavirus-reopening.html?searchResultPosition=43) as we know it. 
+Unfortunately, the COVID-19 pandemic and the “New York State on PAUSE” executive order, issued on March 14, 2020 aimed to slow the spread of the virus, brought tremendous shock to the normal bustle of New York city. Closed museums, theaters, restaurants, and suspended commutes have created ghost town-like scenes and some people to proclaim that New York City is [“over”](https://www.nytimes.com/2020/08/25/nyregion/nyc-coronavirus-reopening.html?searchResultPosition=43) as we know it. 
 
-This project moves forward with the aim of understanding the influence of the COVID-19 pandemic on human mobility trends in NYC as measured by MTA ridership on subway trains and buses. Understanding trends in ridership is important as it may be associated with economic implications such as consumer spending as well as COVID-19 transmission. Understanding this important issue could provide insight to policymakers, transit authorities, and health departments as they make decisions related to transmission of COVID-19 and modifications to public transportation systems in light of stay-at-home orders.
+This project moves forward with the aim of understanding the influence of the COVID-19 pandemic on human mobility trends in NYC as measured by MTA ridership on subway trains and buses from March to Dec 2019 and 2020. 
 
-### Related work
+### Related Work and Inspiration
 
-* “Is New York City ‘Over’?”. New York Times, August 25, 2020. [Link.](https://www.nytimes.com/2020/08/25/nyregion/nyc-coronavirus-reopening.html?searchResultPosition=43) 
-* COVID-10 Mobility Network Modeling. Stanford University. [Link.](https://covid-mobility.stanford.edu/)
-* Facebook Data for Good Mobility Dashboard. COVID-19 Mobility Data Network. [Link.](https://visualization.covid19mobility.org/?date=2020-11-26&dates=2020-08-26_2020-11-26&region=36)
+Understanding trends in ridership is important as it may be associated with COVID-19 transmission as well as economic implications such as consumer spending. 
+[Past studies](https://covid-mobility.stanford.edu/) have  predicted higher infection rates among disadvantaged racial and socioeconomic groups solely from differences in mobility data.[Simlar studies](https://visualization.covid19mobility.org/?date=2020-11-26&dates=2020-08-26_2020-11-26&region=36) have focused on mobile trends at the county level and fail to look at mobility trends by sector. Our study adds to this important topic as it compares mobility trends by means of transportation (bus, subway). 
+
+Understanding this important issue could provide insight to policymakers, transit authorities, and health departments as they make decisions related to transmission of COVID-19 and modifications to public transportation systems in light of stay-at-home orders.
+
 
 ### Research Questions 
 
