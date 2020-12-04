@@ -101,7 +101,7 @@ plot_subway =
     x = ~date, y = ~value, type = "scatter", mode = "markers",
     color = ~variable, text = ~text_label) %>%
   layout (
-    title = "Subway Ridership Trends 2019 - 2020",
+    title = " Figure 2. Subway Ridership Trends 2019 - 2020",
     xaxis = list(title ="Month/Day", tickformat = "%m/%d"), #drop year
     yaxis = list(title="Ridership"))  %>%
   add_lines(x =as.Date("2020-03-01"), line = list(dash="dot", color = 'red', width=0.5, opacity = 0.5),name = 'First case on 3/1') %>%
@@ -121,7 +121,7 @@ plot_bus =
     x = ~date, y = ~value, type = "scatter", mode = "markers",
     color = ~variable, text = ~text_label) %>%
   layout (
-    title = "Bus Ridership Trends 2019 - 2020",
+    title = " Figure 1. Bus Ridership Trends 2019 - 2020",
     xaxis = list(title ="Month/Day", tickformat = "%m/%d"),
     yaxis = list(title="Ridership")) %>%
   add_lines(x =as.Date("2020-03-01"), line = list(dash="dot", color = 'red', width=0.5, opacity = 0.5),name = 'First case on 3/1') %>%
