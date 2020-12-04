@@ -220,7 +220,10 @@ mta_t_test = mta_samples%>%
 knitr::kable(mta_t_test, digits = 3)
 ```
 
-The following table shows the merged t-test results with the average ridership for each month. 
+### Table 1. T-test Results by Month
+
+*Merged t-test results with the average ridership for each month.* 
+
 
 ```{r, message=FALSE}
 mta_year_ttest = 
@@ -231,6 +234,8 @@ knitr::kable(mta_year_ttest)
 ```
 
 The following plot was created using the final dataframe to depict average ridership for each month comparing 2019 and 2020. The labels that appear at each data point as you hover over them provides additional information about the significance or lack of significant in ridership difference. 
+
+### Figure 3. Monthly Average Ridership of Subway 2019 vs 2020
 
 ```{r message=FALSE}
 #create a text_label label
@@ -256,7 +261,6 @@ plot_ly(
     x = ~month, y = ~value, type = "scatter", mode = "lines+markers",
     color = ~variable, text = ~text_label) %>%
   layout (
-    title = "Monthly Average Ridership of Subway 2019 vs 2020",
     xaxis = list(title ="Months",range=c(3,11)),
     yaxis = list(title="Average Ridership"))
 ```
