@@ -8,10 +8,10 @@ output:
     code_folding: hide
 ---
 
-# 2019 vs. 2020 Ridership: T-Test
+# Comparing 2019 and 2020 Subway Ridership 
 
+We conducted a two-sample t-test to explore the difference in average subway ridership between 2019 and 2020. 
 
-Let us first look at the average ridership of subway during 2019 and 2020 for each month.
 ```{r, include=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
@@ -160,9 +160,8 @@ plot_subway
 (plot_bus_2+plot_subway_2)
 ```
 
-Let us now compare 2019 and 2020 ridership by month and check if they are significantly different.
+After converting the dates to an appropriate numeric format and calculating average ridership values per month, we created a dataframe to nest the observations for 2019 and 2020 subway ridership for each month. 
 
-First we need to create our dataframe that nests the observations for 2019 and 2020 subway ridership for each month.
 ```{r, results='hide', message=FALSE}
 #t-test set up 
 #separate by month and day
@@ -202,7 +201,7 @@ mta_samples =
   rename(month = month...1)
 ```
 
-Now we need to perform a t-test to check if the subway ridership is signficantly different between 2019 and 2020 data. We map across each month to test if the values of the samples of 2019 and 2020 ridership data differs for each month. We then compare the p-value obtained from the tests to determine whether the differene in ridership numbers is significant or not
+Next, we performed a t-test to check if the subway ridership was significantly different between 2019 and 2020 data by mapping across each month. We then compared the p-value obtained from the tests to determine whether the difference in ridership values was significant or not.
 
 ```{r, results='hide', message=FALSE}
 mta_t_test = mta_samples%>%
@@ -221,7 +220,8 @@ mta_t_test = mta_samples%>%
 knitr::kable(mta_t_test, digits = 3)
 ```
 
-We can merge the t-test results with the average riderships from before..
+The following table shows the merged t-test results with the average ridership for each month. 
+
 ```{r, message=FALSE}
 mta_year_ttest = 
   bind_cols(mta_subway_ridership, mta_t_test)%>%
@@ -230,7 +230,8 @@ mta_year_ttest =
 knitr::kable(mta_year_ttest) 
 ```
 
-Using this final dataframe, we can plot a graph showing the average ridership for each month comparing the 2019 to 2020 ridership and then labelling the signficance or lack of significance in ridership differences..
+The following plot was created using the final dataframe to depict average ridership for each month comparing 2019 and 2020. The labels that appear at each data point as you hover over them provides additional information about the significance or lack of significant in ridership difference. 
+
 ```{r message=FALSE}
 #create a text_label label
 text_label =
@@ -260,4 +261,4 @@ plot_ly(
     yaxis = list(title="Average Ridership"))
 ```
 
-
+The results indicate that there is a statistically difference between subway ridership trends in 2019 as compared to 2020 for every month. 
