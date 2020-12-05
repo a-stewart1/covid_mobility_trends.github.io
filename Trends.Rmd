@@ -174,7 +174,7 @@ plot_subway
 )))
 ```
 
-__Results:__ 
+__Highlights:__ 
 
 * __Overall reduction in bus and subway ridership in 2020 compared to 2019__
 
