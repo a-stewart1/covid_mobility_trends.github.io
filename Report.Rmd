@@ -34,7 +34,7 @@ output:
   Understanding this important issue could provide insight to policymakers, transit authorities, and health departments as they make decisions related to transmission of COVID-19 and modifications to public transportation systems in light of stay-at-home orders.
 
 
-### Research Questions: 
+### Research Questions 
 
 * How has the COVID-19 pandemic influenced trends in subway and bus ridership in NYC from March to November 2020? 
 
@@ -44,16 +44,16 @@ output:
 
 We initially wanted to explore mobility trends by borough and expand our means of transportation to air traffic. However, we did not find adequate information on mobility trends at the borough level and realized that adding air traffic would be a bit overwhelming for the scope of this project. We identified Apple Mobility Trend data as a potential source but ultimately decided to use MTA data due to more appropriate variables. The Apple data only provided percentage change values and not the crude number of ridership, which was important for our visualization and statistical tests. Additionally, we expected to explore trends for the whole calendar year and were limited by only having available data from March to November. 
 
-### Data
+# Data
 
-#### Data Source 
+### Data Source 
 
 We used a publicly available [dataset](https://new.mta.info/coronavirus/ridership) on day-by-day ridership numbers  from the MTA. The dataset contains information on total estimated ridership and percentage change from 2019 by day, beginning March 1, 2020. Estimates of ridership by subway, bus (local, limited, SBS, and Express), Long Island Rail Road, Metro-North Railroad, Access-A-Ride, and Bridges and Tunnels are all available, however, we decided to restrict our analysis to subway and bus ridership.   
 
 The dataset was downloaded as a .csv files and imported into RStudio. We then cleaned the variables names, verified that there were no missing values, and excluded the variables on the Long Island Rail Road, Metro-North Railroad, Access-A-Ride, and Bridges and Tunnels, which we did not plan to include in further data visualization and analysis.
 
 
-#### Data Cleaning 
+### Data Cleaning 
 
 The dataset was downloaded as a .csv file and imported into RStudio. We then cleaned the variables names, verified that there were no missing values, and excluded the variables on the Long Island Rail Road, Metro-North Railroad, Access-A-Ride, and Bridges and Tunnels, which we did not plan to include in further data visualization and analysis. 
 
@@ -123,7 +123,7 @@ mta_data = mta_data %>%
     )
 ```
 
-### Exploratory Analysis 
+# Exploratory Analysis 
 
 We first implemented an exploratory analysis of subway and bus MTA ridership trends in 2019 and 2020.  
 
@@ -305,8 +305,9 @@ In Figure 2., which shows trends in subway ridership, there appears to be simila
  
 In Figure 3. we observe that from mid-March onward there are overall reduced ridership trends in 2020 as compared to 2019 for both forms of transit. 
 
-### Additional Analysis 
+# Statistical Analysis 
 
+## T Tests
 We conducted a two-sample t-test to explore the difference in average subway ridership between 2019 and 2020. 
 
 ```{r, include=FALSE}
@@ -562,7 +563,8 @@ plot_ly(
 The results indicate that there is a statistically significant difference (p <.001) in subway ridership trends across all months(March-November)in 2019 and 2020. 
 
 
-# Comparing Subway and Bus Ridership with Regression Modeling 
+## Regression 
+
 
 Next, we proposed a regression model for subway ridership in 2020.
 As the outcome (subway ridership) is continuous, we fit a linear regression model.
@@ -723,32 +725,18 @@ ggtitle("Residual vs. Predicted value of Subway 2020 Ridership Regression Model"
   * For each additional change in month, we expect bus ridership to increase by 26,325  units, on average. 
 
 
-### Discussion 
-What were your findings? Are they what you expect? What insights into the data can you make?
 
-Trends:
-“we can see that the ridership values in March 2020 are similar to those of ridership in March 2019 for both buses and subways. However, from mid-March onward there are overall reduced ridership trends in 2020 as compared to 2019 for both forms of transit”
+# Discussion 
 
-These trends in reduced ridership align with the “New York on PAUSE” executive order, which caused many people to stop using public transportation. ’
+Analysis using t test support our hypothesis that the average MTA subway ridership in 2020 was significantly different from that of 2019. We further observe in the regression analysis that as months progressed there were increases in both subway and bus ridership. 
 
-T Tests
-The results indicate that there is a statistically significant difference in subway ridership trends for the months of March-November 2019 and 2020.
 
-### Summary & Discussion 
+From mid-March onward, there are overall reduced ridership trends in 2020 as compared to 2019 for both forms of transit.There is a steep decline in ridership starting late March/ Early April. This could be due to (1) the statewide PAUSE order where people who were not essential workers did not use MTA to commute to work,(2) closing of schools, in which millions of students use MTA to go to school, and (3) decline in tourism. We can observe an increase in ridership for both subway and bus, starting early June. This could be due to (1) people are going back to school and work, and (2) people feel comfortable using public transportation as the rates of infection in New York City slowed down, compared to March - late May, where we reached 200,000 cumulative cases for COVID-19 within 50 days. 
 
-Initially, the ridership values in early March 2020 were comparable to those of ridership in March 2019 for both buses and subways. However, from mid-March onward, there are overall reduced ridership trends in 2020 as compared to 2019 for both forms of transit.
+The implications of our findings are valuable in understanding the impact of COVID-19 on usage of public transportation in NYC. Our findings could provide insight to transit authorities in regards to changes in schedules in light of recent budget cuts. Health departments and contact traces could benefit from using these findings about population movements and density to better understand future outbreaks of COVID-19. Most importantly, state officials can understand how measures such as stay at home orders can influence overall transit density and consumer spending.  
 
-We had hypothesized that the average MTA subway ridership in 2020 was significantly different from that of 2019, mainly due to COVID-19 restrictions. Our t-test analysis (see below) indicated a significant difference (p<0.0001) for the months of March - November in 2019 and 2020. Hence, at the 0.05 significance level, our t-test showed significant changes for all months in March - November 2020, from the same time frame in 2019, regarding subway ridership. Secondly, through our regression analysis, we further observed that (add interpretation for regression).
+Further studies should examine additional modes of transportation such as personal vehicles, air traffic, and bike usage. Analysis broken down by borough could provide further details on mobility trends among neighborhoods of different socio-economic status. 
 
-<img src = "./Images/ttest_results.png" style="width:50%">
-
-Furthermore, the graph below shows the ridership trends for bus and subway between 2019 and 2020, which can help us better understand and see the changes in MTA ridership since the COVID-19 pandemic.
-
-<img src = "./Images/mta_graph.png" style="width:75%">
-
-As seen above, while the MTA ridership at the beginning of 2020 is comparable to those of 2019, there is a steep decline in ridership starting late March/ Early April. This could be due to (1) the statewide PAUSE order where people who were not essential workers did not use MTA to commute to work,(2) closing of schools, in which millions of students use MTA to go to school, and (3) decline in tourism. We can observe an increase in ridership for both subway and bus, starting early June. This could be due to (1) people are going back to school and work, and (2) people feel comfortable using public transportation as the rates of infection in New York City slowed down, compared to March - late May, where we reached 200,000 cumulative cases for COVID-19 within 50 days. 
-
-Further studies can examine what are the factors that led to an increase in ridership since June, such as hospital-bed availability, infection rates, state-wide restrictions (work, school), and policy changes.
 
 
 
