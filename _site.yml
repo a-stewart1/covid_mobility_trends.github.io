@@ -7,7 +7,7 @@ navbar:
       href: about.html
     - text: "Data"
       href: Data.html
-    - text: "Analysis"
+    - text: "Analysis & Results"
       menu: 
         - text: "Mobility Trends"
           href: Trends.html 
@@ -15,8 +15,6 @@ navbar:
           href: ttest.html
         - text: "Regression"
           href: Analysis2.html
-    - text: "Discussion"
-      href: Discussion.html
     - text: "Dashboard"
       href: plotly.html
     - text: "Report"
