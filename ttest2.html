@@ -11,7 +11,7 @@
 
 
 
-<title>Analysis2.utf8</title>
+<title>ttest2.utf8</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -26,6 +26,13 @@
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -364,7 +371,7 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Analysis &amp; Results
+    Analysis
      
     <span class="caret"></span>
   </a>
@@ -379,6 +386,9 @@ div.tocify {
       <a href="Analysis2.html">Regression</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="Discussion.html">Discussion</a>
 </li>
 <li>
   <a href="plotly.html">Dashboard</a>
@@ -414,133 +424,181 @@ div.tocify {
 
 
 <p><br></p>
-<div id="comparing-subway-and-bus-ridership-with-regression-modeling" class="section level1">
-<h1>Comparing Subway and Bus Ridership with Regression Modeling</h1>
-<p>“First we need to propose a regression model for subway ridership in 2020. As the outcome (subway ridership) is continuous, we can fit a linear regression model.”</p>
-<pre class="r"><code>subway_ridership = lm(subway_2020 ~ month, data = mta_data)
+<div id="comparing-2019-and-2020-subway-ridership" class="section level1">
+<h1>Comparing 2019 and 2020 Subway Ridership</h1>
+<p>We conducted a two-sample t-test to explore the difference in average subway ridership between 2019 and 2020.</p>
+<p>After converting the dates to an appropriate numeric format and calculating average ridership values per month, we created a dataframe to nest the observations for 2019 and 2020 subway ridership for each month.</p>
+<pre class="r"><code>#separate by month and day
+mta_data = 
+  mta_data %&gt;%
+  arrange(date) %&gt;%
+  separate(date, into = c(&quot;month&quot;, &quot;day&quot;, &quot;year&quot;))%&gt;%
+  mutate(month = as.numeric(month),
+         day = as.numeric(day)) %&gt;%
+  select(-c(year)) #drop year column
 
-subway_ridership %&gt;% 
-  broom::tidy() </code></pre>
-<pre><code>## # A tibble: 2 x 5
-##   term        estimate std.error statistic       p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
-## 1 (Intercept)  965080.   160401.      6.02 0.00000000587
-## 2 month         32473.    21860.      1.49 0.139</code></pre>
-<pre class="r"><code>#to tidy the output and get only the intercept, slope and p-values 
-subway_ridership %&gt;% 
-  broom::tidy() %&gt;% 
-  select(term, estimate, p.value) %&gt;% 
-  knitr::kable(digits = 3)</code></pre>
+mta_subway_ridership =
+  mta_data %&gt;%
+  group_by(month)%&gt;%
+  summarize(
+    avg_subway_2019 = mean(subway_2019),
+    avg_subway_2020 = mean(subway_2020)
+  )
+mta_subway_ridership%&gt;%knitr::kable()</code></pre>
+<p>Next, we performed a t-test to check if the subway ridership was significantly different between 2019 and 2020 data by mapping across each month. We then compared the p-value obtained from the tests to determine whether the difference in ridership values was significant or not.</p>
+<pre class="r"><code>mta_2019_sample = 
+  mta_data%&gt;%
+  select(month, subway_2019) %&gt;%
+  nest(subway_2019)%&gt;%
+  mutate(&quot;subway_2019_sample&quot; = data)%&gt;%
+  select(-data)
+
+mta_2020_sample = 
+  mta_data%&gt;%
+  select(month, subway_2020)%&gt;%
+  nest(subway_2020)%&gt;%
+  mutate(&quot;subway_2020_sample&quot; = data)%&gt;%
+  select(-data)
+
+mta_samples = 
+  bind_cols(mta_2019_sample, mta_2020_sample)%&gt;%
+  select(-month...3)%&gt;%
+  rename(month = month...1)
+
+mta_t_test = 
+  mta_samples%&gt;%
+  mutate(t_test = map2(.x = subway_2019_sample, .y = subway_2020_sample, ~t.test(.x , .y) ),
+         t_test_results = map(t_test, broom::tidy))%&gt;%
+  select(month, t_test_results)%&gt;%
+  unnest(t_test_results)%&gt;%
+  select(month,p.value)%&gt;%
+  mutate(difference = case_when(
+    p.value &gt;= 0.05 ~ &quot;insignificant&quot;,
+    p.value &lt; 0.05 ~ &quot;significant&quot;),
+    p.value = ifelse(
+    p.value&lt; 0.001,&quot;&lt;0.001&quot;,round(p.value, digits = 4))) %&gt;%
+  arrange(month) 
+
+knitr::kable(mta_t_test, digits = 3)</code></pre>
+<div id="table-1.-t-test-results-by-month" class="section level3">
+<h3>Table 1. T-test Results by Month</h3>
+<p><em>Merged t-test results with the average ridership for each month.</em></p>
+<pre class="r"><code>mta_year_ttest = 
+  bind_cols(mta_subway_ridership, mta_t_test)%&gt;%
+  select(-month...4)%&gt;%
+  rename(month = month...1) 
+knitr::kable(mta_year_ttest)</code></pre>
 <table>
 <thead>
 <tr class="header">
-<th align="left">term</th>
-<th align="right">estimate</th>
-<th align="right">p.value</th>
+<th align="right">month</th>
+<th align="right">avg_subway_2019</th>
+<th align="right">avg_subway_2020</th>
+<th align="left">p.value</th>
+<th align="left">difference</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">965079.87</td>
-<td align="right">0.000</td>
+<td align="right">3</td>
+<td align="right">4746353</td>
+<td align="right">2381477.6</td>
+<td align="left">&lt;0.001</td>
+<td align="left">significant</td>
 </tr>
 <tr class="even">
-<td align="left">month</td>
-<td align="right">32472.74</td>
-<td align="right">0.139</td>
+<td align="right">4</td>
+<td align="right">4873551</td>
+<td align="right">391671.7</td>
+<td align="left">&lt;0.001</td>
+<td align="left">significant</td>
 </tr>
-</tbody>
-</table>
-<pre class="r"><code>#to plot for regression line 
-  ggplot(mta_data, aes(month, subway_2020)) +
-  geom_point() +
-  stat_smooth(method = lm)+
-   xlab(&quot;Month in 2020&quot;) +
-  ylab(&quot;Subway Ridership&quot;) +
-  ggtitle(&quot; Figure 5. Subway Ridership 2020 Regression&quot;)</code></pre>
-<p><img src="Analysis2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>Now we will build a plot of model residuals against fitted values for subway ridership in 2020.</p>
-<pre class="r"><code>mta_data %&gt;% 
-  modelr::add_predictions(subway_ridership) %&gt;% 
-  modelr::add_residuals(subway_ridership) %&gt;% 
-  ggplot(aes(x = pred, y = resid)) + geom_point() + 
-  labs(x = &quot;Predicted value&quot;, 
-       y = &quot;Residual&quot;) +
-    ggtitle(&quot;Figure 6. Residual vs. Predicted value of Subway 2020 Ridership Regression Model&quot;)</code></pre>
-<p><img src="Analysis2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>Now, we need to propose a regression model for bus ridership in 2020.</p>
-<p>As the outcome (bus ridership) is continuous, we can fit a linear regression model.</p>
-<pre class="r"><code>bus_ridership = lm(bus_2020 ~ month, data = mta_data)
-bus_ridership %&gt;% 
-  broom::tidy() </code></pre>
-<pre><code>## # A tibble: 2 x 5
-##   term        estimate std.error statistic  p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)  717060.    64077.     11.2  4.46e-24
-## 2 month         26325.     8733.      3.01 2.82e- 3</code></pre>
-<pre class="r"><code>#Now we need to tidy the output and get only the intercept, slope and p-values 
-bus_ridership %&gt;% 
-  broom::tidy() %&gt;% 
-  select(term, estimate, p.value) %&gt;% 
-  knitr::kable(digits = 3)</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">estimate</th>
-<th align="right">p.value</th>
-</tr>
-</thead>
-<tbody>
 <tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">717060.27</td>
-<td align="right">0.000</td>
+<td align="right">5</td>
+<td align="right">4682924</td>
+<td align="right">493526.1</td>
+<td align="left">&lt;0.001</td>
+<td align="left">significant</td>
 </tr>
 <tr class="even">
-<td align="left">month</td>
-<td align="right">26324.69</td>
-<td align="right">0.003</td>
+<td align="right">6</td>
+<td align="right">4883863</td>
+<td align="right">798982.6</td>
+<td align="left">&lt;0.001</td>
+<td align="left">significant</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">4516652</td>
+<td align="right">1050498.6</td>
+<td align="left">&lt;0.001</td>
+<td align="left">significant</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="right">4343573</td>
+<td align="right">1137601.2</td>
+<td align="left">&lt;0.001</td>
+<td align="left">significant</td>
+</tr>
+<tr class="odd">
+<td align="right">9</td>
+<td align="right">4886223</td>
+<td align="right">1428918.6</td>
+<td align="left">&lt;0.001</td>
+<td align="left">significant</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">4964620</td>
+<td align="right">1549459.3</td>
+<td align="left">&lt;0.001</td>
+<td align="left">significant</td>
+</tr>
+<tr class="odd">
+<td align="right">11</td>
+<td align="right">4879758</td>
+<td align="right">1522150.0</td>
+<td align="left">&lt;0.001</td>
+<td align="left">significant</td>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>#to plot for regression line
-ggplot(mta_data, aes(month, bus_2020)) +
-  geom_point() +
-  stat_smooth(method = lm)+
-   xlab(&quot;Month in 2020&quot;) +
-  ylab(&quot;Bus Ridership&quot;) +
-  ggtitle(&quot; Figure 7. Bus Ridership 2020 Regression&quot;)</code></pre>
-<p><img src="Analysis2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<ul>
-<li>Next, we will build a plot of model residuals against fitted values for bus ridership in 2020.</li>
-</ul>
-<pre class="r"><code>mta_data %&gt;% 
-  modelr::add_predictions(bus_ridership) %&gt;% 
-  modelr::add_residuals(bus_ridership) %&gt;% 
-  ggplot(aes(x = pred, y = resid)) + geom_point() + 
-  labs(x = &quot;Predicted value&quot;, 
-       y = &quot;Residual&quot;)</code></pre>
-<p><img src="Analysis2_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<pre class="r"><code>ggtitle(&quot;Residual vs. Predicted value of Subway 2020 Ridership Regression Model&quot;)</code></pre>
-<pre><code>## $title
-## [1] &quot;Residual vs. Predicted value of Subway 2020 Ridership Regression Model&quot;
-## 
-## attr(,&quot;class&quot;)
-## [1] &quot;labels&quot;</code></pre>
+<p>The following plot was created using the final dataframe to depict average ridership for each month comparing 2019 and 2020. The labels that appear at each data point as you hover over them provides additional information about the significance or lack of significant in ridership difference.</p>
+</div>
+<div id="figure-4.-monthly-average-ridership-of-subway-2019-vs-2020" class="section level3">
+<h3>Figure 4. Monthly Average Ridership of Subway 2019 vs 2020</h3>
+<pre class="r"><code>#create a text_label label
+text_label =
+  mta_year_ttest %&gt;%
+  mutate(text_label = str_c(&quot;p-value: &quot;,p.value, &quot;\nDifference: &quot;, difference)) %&gt;%
+  select(month, text_label)
+#pivoting
+plot_ttest = 
+  mta_subway_ridership %&gt;%
+  rename(
+    &quot;2020&quot;=avg_subway_2020,
+    &quot;2019&quot;=avg_subway_2019
+  ) %&gt;%
+  melt(., id.vars = &quot;month&quot;) %&gt;%
+#merge based on month 
+  merge(text_label, by = &quot;month&quot;)
+
+#plotting
+plot_ttest %&gt;%
+plot_ly(
+    x = ~month, y = ~value, type = &quot;scatter&quot;, mode = &quot;lines+markers&quot;,
+    color = ~variable, text = ~text_label) %&gt;%
+  layout (
+    title = &quot;Monthly Average Ridership of Subway 2019 vs 2020&quot;,
+    xaxis = list(title =&quot;Months&quot;,range=c(3,11)),
+    yaxis = list(title=&quot;Average Ridership&quot;))</code></pre>
+<div id="htmlwidget-4dd76f32452cff861975" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4dd76f32452cff861975">{"x":{"visdat":{"1beb2f964f73":["function () ","plotlyVisDat"]},"cur_data":"1beb2f964f73","attrs":{"1beb2f964f73":{"x":{},"y":{},"mode":"lines+markers","text":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Monthly Average Ridership of Subway 2019 vs 2020","xaxis":{"domain":[0,1],"automargin":true,"title":"Months","range":[3,11]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Average Ridership"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[3,4,5,6,7,8,9,10,11],"y":[4746353.22005047,4873551.36660661,4682924.48547445,4883863.21215357,4516651.67933839,4343573.05009655,4886223.17517515,4964619.88034507,4879757.68781309],"mode":"lines+markers","text":["p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant"],"type":"scatter","name":"2019","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[3,4,5,6,7,8,9,10,11],"y":[2381477.64516129,391671.7,493526.064516129,798982.6,1050498.61290323,1137601.22580645,1428918.63333333,1549459.32258065,1522150],"mode":"lines+markers","text":["p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant"],"type":"scatter","name":"2020","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
 <div id="results" class="section level3">
 <h3>Results</h3>
-<ul>
-<li><strong>Subway</strong>
-<ul>
-<li>For each additional change in month, we expect subway ridership to increase by 32,473 units, on average.</li>
-</ul></li>
-<li><strong>Bus</strong>
-<ul>
-<li>For each additional change in month, we expect bus ridership to increase by 26,325 units, on average.</li>
-</ul></li>
-</ul>
+<p>The results indicate that there is a statistically significant difference in subway ridership trends for the months of March-November 2019 and 2020.</p>
 </div>
 </div>
 
