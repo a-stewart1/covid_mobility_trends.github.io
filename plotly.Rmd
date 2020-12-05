@@ -203,7 +203,7 @@ plot_ly(
 ```
 
 ### Chart 2
-```{r, echo = FALSE, warning=FALSE, message=FALSE}
+```{r, echo = FALSE, warning=FALSE, results='hide', message = FALSE}
 subway_ridership = lm(subway_2020 ~ month, data = mta_data)
 
 subway_ridership %>% 
