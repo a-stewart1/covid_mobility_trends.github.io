@@ -458,7 +458,7 @@ subway_ridership %&gt;%
   stat_smooth(method = lm)+
    xlab(&quot;Month in 2020&quot;) +
   ylab(&quot;Subway Ridership&quot;) +
-  ggtitle(&quot;Subway Ridership 2020 Regression&quot;)</code></pre>
+  ggtitle(&quot; Figure 5. Subway Ridership 2020 Regression&quot;)</code></pre>
 <p><img src="Analysis2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>Now we will build a plot of model residuals against fitted values for subway ridership in 2020.</p>
 <pre class="r"><code>mta_data %&gt;% 
@@ -467,7 +467,7 @@ subway_ridership %&gt;%
   ggplot(aes(x = pred, y = resid)) + geom_point() + 
   labs(x = &quot;Predicted value&quot;, 
        y = &quot;Residual&quot;) +
-    ggtitle(&quot;Residual vs. Predicted value of Subway 2020 Ridership Regression Model&quot;)</code></pre>
+    ggtitle(&quot;Figure 6. Residual vs. Predicted value of Subway 2020 Ridership Regression Model&quot;)</code></pre>
 <p><img src="Analysis2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>Now, we need to propose a regression model for bus ridership in 2020.</p>
 <p>As the outcome (bus ridership) is continuous, we can fit a linear regression model.</p>
@@ -511,7 +511,7 @@ ggplot(mta_data, aes(month, bus_2020)) +
   stat_smooth(method = lm)+
    xlab(&quot;Month in 2020&quot;) +
   ylab(&quot;Bus Ridership&quot;) +
-  ggtitle(&quot;Bus Ridership 2020 Regression&quot;)</code></pre>
+  ggtitle(&quot; Figure 7. Bus Ridership 2020 Regression&quot;)</code></pre>
 <p><img src="Analysis2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <ul>
 <li>Next, we will build a plot of model residuals against fitted values for bus ridership in 2020.</li>
@@ -529,6 +529,19 @@ ggplot(mta_data, aes(month, bus_2020)) +
 ## 
 ## attr(,&quot;class&quot;)
 ## [1] &quot;labels&quot;</code></pre>
+<div id="results" class="section level3">
+<h3>Results</h3>
+<ul>
+<li><strong>Subway</strong>
+<ul>
+<li>For each additional change in month, we expect subway ridership to increase by 32,473 units, on average.</li>
+</ul></li>
+<li><strong>Bus</strong>
+<ul>
+<li>For each additional change in month, we expect bus ridership to increase by 26,325 units, on average.</li>
+</ul></li>
+</ul>
+</div>
 </div>
 
 

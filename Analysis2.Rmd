@@ -113,7 +113,7 @@ subway_ridership %>%
   stat_smooth(method = lm)+
    xlab("Month in 2020") +
   ylab("Subway Ridership") +
-  ggtitle("Subway Ridership 2020 Regression")
+  ggtitle(" Figure 5. Subway Ridership 2020 Regression")
 ```
 
 Now we will build a plot of model residuals against fitted values for subway ridership in 2020.
@@ -125,7 +125,7 @@ mta_data %>%
   ggplot(aes(x = pred, y = resid)) + geom_point() + 
   labs(x = "Predicted value", 
        y = "Residual") +
-    ggtitle("Residual vs. Predicted value of Subway 2020 Ridership Regression Model")
+    ggtitle("Figure 6. Residual vs. Predicted value of Subway 2020 Ridership Regression Model")
 ```
 
 Now, we need to propose a regression model for bus ridership in 2020.
@@ -149,7 +149,7 @@ ggplot(mta_data, aes(month, bus_2020)) +
   stat_smooth(method = lm)+
    xlab("Month in 2020") +
   ylab("Bus Ridership") +
-  ggtitle("Bus Ridership 2020 Regression")
+  ggtitle(" Figure 7. Bus Ridership 2020 Regression")
 ```
 
 
@@ -164,4 +164,11 @@ mta_data %>%
        y = "Residual")
 ggtitle("Residual vs. Predicted value of Subway 2020 Ridership Regression Model")
 ```
+
+### Results
+* __Subway__
+  * For each additional change in month, we expect subway ridership to increase by 32,473 units, on average.
+
+* __Bus__ 
+  * For each additional change in month, we expect bus ridership to increase by 26,325  units, on average. 
 
