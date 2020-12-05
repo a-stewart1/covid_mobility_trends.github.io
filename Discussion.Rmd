@@ -18,4 +18,4 @@ These trends in reduced ridership align with the "New York on PAUSE" executive o
 
 #### T Tests
 
-The results indicate that there is a statistically significant difference in subway ridership trends for the monts of March-November 2019 and 2020. 
+The results indicate that there is a statistically significant difference in subway ridership trends for the months of March-November 2019 and 2020. 
