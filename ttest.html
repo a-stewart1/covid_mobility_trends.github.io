@@ -26,9 +26,7 @@
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
-<script src="site_libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <script src="site_libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
@@ -37,15 +35,6 @@
 <script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -443,7 +432,8 @@ div.tocify {
 #separate by month and day
 mta_data = 
   mta_data %&gt;%
-  separate(date, into = c(&quot;year&quot;, &quot;month&quot;, &quot;day&quot;))%&gt;%
+  arrange(date) %&gt;%
+  separate(date, into = c(&quot;month&quot;, &quot;day&quot;, &quot;year&quot;))%&gt;%
   mutate(month = as.numeric(month),
          day = as.numeric(day)) %&gt;%
   select(-c(year)) #drop year column
@@ -455,8 +445,8 @@ mta_subway_ridership =
     avg_subway_2019 = mean(subway_2019),
     avg_subway_2020 = mean(subway_2020)
   )
-
 mta_subway_ridership%&gt;%knitr::kable()
+
 mta_2019_sample = 
   mta_data%&gt;%
   select(month, subway_2019) %&gt;%
@@ -476,7 +466,8 @@ mta_samples =
   select(-month...3)%&gt;%
   rename(month = month...1)</code></pre>
 <p>Next, we performed a t-test to check if the subway ridership was significantly different between 2019 and 2020 data by mapping across each month. We then compared the p-value obtained from the tests to determine whether the difference in ridership values was significant or not.</p>
-<pre class="r"><code>mta_t_test = mta_samples%&gt;%
+<pre class="r"><code>mta_t_test = 
+  mta_samples%&gt;%
   mutate(t_test = map2(.x = subway_2019_sample, .y = subway_2020_sample, ~t.test(.x , .y) ),
          t_test_results = map(t_test, broom::tidy))%&gt;%
   select(month, t_test_results)%&gt;%
@@ -497,7 +488,7 @@ knitr::kable(mta_t_test, digits = 3)</code></pre>
   bind_cols(mta_subway_ridership, mta_t_test)%&gt;%
   select(-month...4)%&gt;%
   rename(month = month...1) 
-knitr::kable(mta_year_ttest) </code></pre>
+knitr::kable(mta_year_ttest)</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -510,65 +501,9 @@ knitr::kable(mta_year_ttest) </code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">3</td>
-<td align="right">4746353</td>
-<td align="right">2381477.6</td>
-<td align="left">&lt;0.001</td>
-<td align="left">significant</td>
-</tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="right">4873551</td>
-<td align="right">391671.7</td>
-<td align="left">&lt;0.001</td>
-<td align="left">significant</td>
-</tr>
-<tr class="odd">
-<td align="right">5</td>
-<td align="right">4682924</td>
-<td align="right">493526.1</td>
-<td align="left">&lt;0.001</td>
-<td align="left">significant</td>
-</tr>
-<tr class="even">
-<td align="right">6</td>
-<td align="right">4883863</td>
-<td align="right">798982.6</td>
-<td align="left">&lt;0.001</td>
-<td align="left">significant</td>
-</tr>
-<tr class="odd">
-<td align="right">7</td>
-<td align="right">4516652</td>
-<td align="right">1050498.6</td>
-<td align="left">&lt;0.001</td>
-<td align="left">significant</td>
-</tr>
-<tr class="even">
-<td align="right">8</td>
-<td align="right">4343573</td>
-<td align="right">1137601.2</td>
-<td align="left">&lt;0.001</td>
-<td align="left">significant</td>
-</tr>
-<tr class="odd">
-<td align="right">9</td>
-<td align="right">4886223</td>
-<td align="right">1428918.6</td>
-<td align="left">&lt;0.001</td>
-<td align="left">significant</td>
-</tr>
-<tr class="even">
-<td align="right">10</td>
-<td align="right">4964620</td>
-<td align="right">1549459.3</td>
-<td align="left">&lt;0.001</td>
-<td align="left">significant</td>
-</tr>
-<tr class="odd">
-<td align="right">11</td>
-<td align="right">4879758</td>
-<td align="right">1522150.0</td>
+<td align="right">2020</td>
+<td align="right">4747841</td>
+<td align="right">1188754</td>
 <td align="left">&lt;0.001</td>
 <td align="left">significant</td>
 </tr>
@@ -583,28 +518,28 @@ text_label =
   mta_year_ttest %&gt;%
   mutate(text_label = str_c(&quot;p-value: &quot;,p.value, &quot;\nDifference: &quot;, difference)) %&gt;%
   select(month, text_label)
-
 #pivoting
-plot = 
+plot_ttest = 
   mta_subway_ridership %&gt;%
   rename(
-    &quot;2019&quot;=avg_subway_2019,
-    &quot;2020&quot;=avg_subway_2020
+    &quot;2020&quot;=avg_subway_2020,
+    &quot;2019&quot;=avg_subway_2019
   ) %&gt;%
   melt(., id.vars = &quot;month&quot;) %&gt;%
 #merge based on month 
   merge(text_label, by = &quot;month&quot;)
 
 #plotting
-plot %&gt;%
+plot_ttest %&gt;%
 plot_ly(
     x = ~month, y = ~value, type = &quot;scatter&quot;, mode = &quot;lines+markers&quot;,
     color = ~variable, text = ~text_label) %&gt;%
   layout (
+    title = &quot;Monthly Average Ridership of Subway 2019 vs 2020&quot;,
     xaxis = list(title =&quot;Months&quot;,range=c(3,11)),
     yaxis = list(title=&quot;Average Ridership&quot;))</code></pre>
-<div id="htmlwidget-9880da63df84e66e61bf" style="width:90%;height:576px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9880da63df84e66e61bf">{"x":{"visdat":{"f8043a78ab5e":["function () ","plotlyVisDat"]},"cur_data":"f8043a78ab5e","attrs":{"f8043a78ab5e":{"x":{},"y":{},"mode":"lines+markers","text":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"Months","range":[3,11]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Average Ridership"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[3,4,5,6,7,8,9,10,11],"y":[4746353.22005047,4873551.36660661,4682924.48547445,4883863.21215357,4516651.67933839,4343573.05009655,4886223.17517515,4964619.88034507,4879757.68781309],"mode":"lines+markers","text":["p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant"],"type":"scatter","name":"2019","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[3,4,5,6,7,8,9,10,11],"y":[2381477.64516129,391671.7,493526.064516129,798982.6,1050498.61290323,1137601.22580645,1428918.63333333,1549459.32258065,1522150],"mode":"lines+markers","text":["p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant"],"type":"scatter","name":"2020","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-cbe1456aa049a33230d4" style="width:90%;height:576px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cbe1456aa049a33230d4">{"x":{"visdat":{"112c28c8c099":["function () ","plotlyVisDat"]},"cur_data":"112c28c8c099","attrs":{"112c28c8c099":{"x":{},"y":{},"mode":"lines+markers","text":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Monthly Average Ridership of Subway 2019 vs 2020","xaxis":{"domain":[0,1],"automargin":true,"title":"Months","range":[3,11]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Average Ridership"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[2020],"y":[4747840.86273214],"mode":"lines+markers","text":"p-value: <0.001<br />Difference: significant","type":"scatter","name":"2019","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2020],"y":[1188754.05597015],"mode":"lines+markers","text":"p-value: <0.001<br />Difference: significant","type":"scatter","name":"2020","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <div id="results" class="section level4">
 <h4>Results</h4>
 <p>The results indicate that there is a statistically significant difference in subway ridership trends for the monts of March-November 2019 and 2020.</p>
@@ -623,7 +558,7 @@ plot_ly(
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();

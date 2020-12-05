@@ -78,22 +78,22 @@ mta_data = mta_data %>%
 
 ```{r results='hide', message=FALSE}
 #change date to date format and order by date
-mta_data =
+plot_mta =
   mta_data %>%
   mutate(
     date= as.Date(date,format = "%m/%d")) %>%
   arrange(date)
 #create a text_label label
 text_label =
-  mta_data %>%
+  plot_mta %>%
   mutate(text_label = str_c("percent change from 2019 to 2020: ", subway_pct_change)) %>%
   select(date, text_label)
 
 #graph for subway 
 #pivoting
 plot_subway = 
-  mta_data %>%
-  select(subway_2019, subway_2020, date) %>%
+  plot_mta %>%
+  select(subway_2020, subway_2019, date) %>%
   melt(., id.vars = "date") %>%
 #merge based on month 
   merge(text_label, by = "date") %>%
@@ -102,7 +102,7 @@ plot_subway =
     x = ~date, y = ~value, type = "scatter", mode = "markers",
     color = ~variable, text = ~text_label) %>%
   layout (
-    title = " Figure 2. Subway Ridership Trends 2019 - 2020",
+    title = "Figure 2. Subway Ridership Trends 2019 - 2020",
     xaxis = list(title ="Month/Day", tickformat = "%m/%d"), #drop year
     yaxis = list(title="Ridership"))  %>%
   add_lines(x =as.Date("2020-03-01"), line = list(dash="dot", color = 'red', width=0.5, opacity = 0.5),name = 'First case on 3/1') %>%
@@ -112,8 +112,8 @@ plot_subway =
 
 #pivoting
 plot_bus = 
-  mta_data %>%
-  select(bus_2019,bus_2020,date) %>%
+  plot_mta %>%
+  select(bus_2020,bus_2019,date) %>%
   melt(., id.vars = "date") %>% 
 #merge based on month 
   merge(text_label, by = "date") %>%
@@ -122,7 +122,7 @@ plot_bus =
     x = ~date, y = ~value, type = "scatter", mode = "markers",
     color = ~variable, text = ~text_label) %>%
   layout (
-    title = " Figure 1. Bus Ridership Trends 2019 - 2020",
+    title = "Figure 1. Bus Ridership Trends 2019 - 2020",
     xaxis = list(title ="Month/Day", tickformat = "%m/%d"),
     yaxis = list(title="Ridership")) %>%
   add_lines(x =as.Date("2020-03-01"), line = list(dash="dot", color = 'red', width=0.5, opacity = 0.5),name = 'First case on 3/1') %>%
@@ -131,36 +131,39 @@ plot_bus =
 
 #ggplot for subway
 plot_subway_2 = 
-  mta_data %>%
-  select(subway_2019, subway_2020, date) %>%
+  plot_mta %>%
+  select(subway_2020, subway_2019, date) %>%
   melt(., id.vars = "date") %>%
   ggplot(aes(x=date, y=value, color=variable)) +
   geom_point(alpha=0.5) +
   geom_smooth(se = FALSE)  +
+  xlab("Month/Day") +
+  ylab("Ridership") +
+  ggtitle("Subway Ridership Trends 2019 - 2020") +
   geom_vline(xintercept=as.Date("2020-03-01"), linetype="dotted", color = 'red')+
   geom_vline(xintercept=as.Date("2020-04-07"), linetype="dotted", color = 'red')+
   geom_vline(xintercept=as.Date("2020-05-26"), linetype="dotted", color = 'red')+
   geom_text(x=as.Date("2020-03-01"), y=6100000, label ="First case", angle=90, vjust = 1.2, size=3,color='black') +
   geom_text(x=as.Date("2020-04-07"), y=6100000, label ='100K cases', angle=90, vjust = 1.2, size=3,color='black')+
   geom_text(x=as.Date("2020-05-26"), y=6100000, label ='200K cases', angle=90, vjust = 1.2, size=3,color='black')
-ggplotly(plot_subway_2)
 
 #ggplot for bus
 plot_bus_2 = 
-  mta_data %>%
-  select(bus_2019, bus_2020,date) %>%
+  plot_mta %>%
+  select(bus_2020, bus_2019,date) %>%
   melt(., id.vars = "date") %>% 
   ggplot(aes(x=date, y=value, color=variable)) +
   geom_point(alpha=0.5) +
   geom_smooth(se = FALSE) +  
+  xlab("Month/Day") +
+  ylab("Ridership") +
+  ggtitle("Bus Ridership Trends 2019 - 2020") +
   geom_vline(xintercept=as.Date("2020-03-01"), linetype="dotted", color = 'red')+
   geom_vline(xintercept=as.Date("2020-04-07"), linetype="dotted", color = 'red')+
   geom_vline(xintercept=as.Date("2020-05-26"), linetype="dotted", color = 'red')+
   geom_text(x=as.Date("2020-03-01"), y=2400000, label ="First case", angle=90, vjust = 1.2, size=3,color='black') +
   geom_text(x=as.Date("2020-04-07"), y=2400000, label ='100K cases', angle=90, vjust = 1.2, size=3,color='black')+
   geom_text(x=as.Date("2020-05-26"), y=2400000, label ='200K cases', angle=90, vjust = 1.2, size=3,color='black')
-ggplotly(plot_bus_2)
-
 ```
 
 
