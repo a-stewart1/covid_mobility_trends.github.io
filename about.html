@@ -25,19 +25,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -421,7 +410,7 @@ div.tocify {
 <p><img src="Images/200430-new-york-subway-ew-1235p_08a2968cb59418529191b5d2bd30de9c.fit-760w.jpg" style="width:75.0%" /></p>
 <div id="motivation" class="section level3">
 <h3>Motivation</h3>
-<p>The central artery of New York City, the public transportation system is central to the cultural and economic well-being. Among its usual million daily users such as hip hop dancers, Wall Street executives, and the famous <a href="https://www.cnn.com/2015/09/22/living/pizza-rat-feat/index.html">pizza rat</a>, the subway proves to be more than a means of transport; it is a way of life.</p>
+<p>The central artery of New York City, the public transportation system is central to the city’s cultural and economic well-being. Among its usual million daily users such as hip hop dancers, Wall Street executives, and the famous <a href="https://www.cnn.com/2015/09/22/living/pizza-rat-feat/index.html">pizza rat</a>, the subway proves to be more than a means of transport; it is a way of life.</p>
 <p>Unfortunately, the COVID-19 pandemic and the “New York State on PAUSE” executive order, issued on March 14, 2020 aimed to slow the spread of the virus, brought tremendous shock to the normal bustle of New York City. Closed museums, theaters, restaurants, and suspended commutes have created ghost town-like scenes and some people to proclaim that New York City is <a href="https://www.nytimes.com/2020/08/25/nyregion/nyc-coronavirus-reopening.html?searchResultPosition=43">“over”</a> as we know it.</p>
 <p>This project moves forward with the aim of understanding the influence of the COVID-19 pandemic on human mobility trends in NYC as measured by MTA ridership on subway trains and buses from March to December 2019 and 2020.</p>
 </div>
@@ -454,7 +443,7 @@ div.tocify {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();

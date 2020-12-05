@@ -14,7 +14,7 @@ output:
 
 ### Motivation
 
-  The central artery of New York City, the public transportation system is central to the cultural and economic well-being. Among its usual million daily users such as hip hop dancers, Wall Street executives, and the famous [pizza rat](https://www.cnn.com/2015/09/22/living/pizza-rat-feat/index.html), the subway proves to be more than a means of transport; it is a way of life. 
+  The central artery of New York City, the public transportation system is central to the city's cultural and economic well-being. Among its usual million daily users such as hip hop dancers, Wall Street executives, and the famous [pizza rat](https://www.cnn.com/2015/09/22/living/pizza-rat-feat/index.html), the subway proves to be more than a means of transport; it is a way of life. 
 
   Unfortunately, the COVID-19 pandemic and the “New York State on PAUSE” executive order, issued on March 14, 2020 aimed to slow the spread of the virus, brought tremendous shock to the normal bustle of New York City. Closed museums, theaters, restaurants, and suspended commutes have created ghost town-like scenes and some people to proclaim that New York City is [“over”](https://www.nytimes.com/2020/08/25/nyregion/nyc-coronavirus-reopening.html?searchResultPosition=43) as we know it. 
 
