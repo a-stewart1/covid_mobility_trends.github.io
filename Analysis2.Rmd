@@ -9,4 +9,158 @@ output:
 ---
 <br>
 
-# Regression 
+# Comparing Subway and Bus Ridership with Regression Modeling 
+
+"First we need to propose a regression model for subway ridership in 2020.
+As the outcome (subway ridership) is continuous, we can fit a linear regression model."
+
+```{r, include=FALSE}
+library(tidyverse)
+library(patchwork)
+library(readr)
+library(broom)
+library(dbplyr)
+library(viridis)
+library(reshape2)
+library(plotly)
+library(lubridate)
+
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+
+#Importing and cleaning data
+mta_data = read_csv (file = "./data/MTA_recent_ridership_data_20201123_0.csv",
+                     col_types = cols(
+                       date = col_date(format = "%mm/%dd/%yy"),
+                       `Subways: % Change From 2019 Equivalent Day` = col_number(),
+                       `Buses: % Change From 2019 Equivalent Day` = col_number(),
+                       `Bridges and Tunnels: % Change From 2019 Equivalent Day` = col_number()
+                       ) #only changed the formats of important variables 
+) %>%
+  janitor::clean_names()
+skimr::skim(mta_data)
+mta_data =
+  mta_data %>%
+  subset(select = -c(lirr_total_estimated_ridership, lirr_percent_change_from_2019_monthly_weekday_saturday_sunday_average, metro_north_total_estimated_ridership, metro_north_percent_change_from_2019_monthly_weekday_saturday_sunday_average, access_a_ride_total_scheduled_trips, access_a_ride_percent_change_from_2019_monthly_weekday_saturday_sunday_average, bridges_and_tunnels_total_traffic, bridges_and_tunnels_percent_change_from_2019_equivalent_day))
+#exclude data for lirr, metronorth, access-a-ride, bridges & tunnel
+
+mta_data = mta_data %>%
+  mutate( 
+    'subway_2019' = subways_total_estimated_ridership/(1+(subways_percent_change_from_2019_equivalent_day/100)),
+    'bus_2019'=
+      buses_total_estimated_ridership/(1+(buses_percent_change_from_2019_equivalent_day/100))
+    ) %>%
+  rename(
+    "subway_2020" = subways_total_estimated_ridership,
+    "subway_pct_change" = subways_percent_change_from_2019_equivalent_day,
+    "bus_2020" = buses_total_estimated_ridership,
+    "bus_pct_change" = buses_percent_change_from_2019_equivalent_day
+    )
+
+#change date to date format and order by date
+plot_mta =
+  mta_data %>%
+  mutate(
+    date= as.Date(date,format = "%m/%d")) %>%
+  arrange(date)
+#create a text_label label
+text_label =
+  plot_mta %>%
+  mutate(text_label = str_c("percent change from 2019 to 2020: ", subway_pct_change)) %>%
+  select(date, text_label)
+
+#separate by month and day
+mta_data = 
+  mta_data %>%
+  arrange(date) %>%
+  separate(date, into = c("month", "day", "year"))%>%
+  mutate(month = as.numeric(month),
+         day = as.numeric(day)) %>%
+  select(-c(year)) #drop year column
+
+mta_subway_ridership =
+  mta_data %>%
+  group_by(month)%>%
+  summarize(
+    avg_subway_2019 = mean(subway_2019),
+    avg_subway_2020 = mean(subway_2020)
+  )
+mta_subway_ridership%>%knitr::kable()
+```
+
+```{r, message=FALSE}
+subway_ridership = lm(subway_2020 ~ month, data = mta_data)
+
+subway_ridership %>% 
+  broom::tidy() 
+
+#to tidy the output and get only the intercept, slope and p-values 
+subway_ridership %>% 
+  broom::tidy() %>% 
+  select(term, estimate, p.value) %>% 
+  knitr::kable(digits = 3)
+
+#to plot for regression line 
+  ggplot(mta_data, aes(month, subway_2020)) +
+  geom_point() +
+  stat_smooth(method = lm)+
+   xlab("Month in 2020") +
+  ylab("Subway Ridership") +
+  ggtitle("Subway Ridership 2020 Regression")
+```
+
+Now we will build a plot of model residuals against fitted values for subway ridership in 2020.
+
+```{r, message=FALSE}
+mta_data %>% 
+  modelr::add_predictions(subway_ridership) %>% 
+  modelr::add_residuals(subway_ridership) %>% 
+  ggplot(aes(x = pred, y = resid)) + geom_point() + 
+  labs(x = "Predicted value", 
+       y = "Residual") +
+    ggtitle("Residual vs. Predicted value of Subway 2020 Ridership Regression Model")
+```
+
+Now, we need to propose a regression model for bus ridership in 2020.
+As the outcome (bus ridership) is continuous, we can fit a linear regression model.
+
+```{r, message=FALSE}
+bus_ridership = lm(bus_2020 ~ month, data = mta_data)
+bus_ridership %>% 
+  broom::tidy() 
+
+#Now we need to tidy the output and get only the intercept, slope and p-values 
+bus_ridership %>% 
+  broom::tidy() %>% 
+  select(term, estimate, p.value) %>% 
+  knitr::kable(digits = 3)
+
+#to plot for regression line
+ggplot(mta_data, aes(month, bus_2020)) +
+  geom_point() +
+  stat_smooth(method = lm)+
+   xlab("Month in 2020") +
+  ylab("Bus Ridership") +
+  ggtitle("Bus Ridership 2020 Regression")
+```
+
+
+* Next, we will build a plot of model residuals against fitted values for bus ridership in 2020.
+
+```{r, message=FALSE}
+mta_data %>% 
+  modelr::add_predictions(bus_ridership) %>% 
+  modelr::add_residuals(bus_ridership) %>% 
+  ggplot(aes(x = pred, y = resid)) + geom_point() + 
+  labs(x = "Predicted value", 
+       y = "Residual")
+ggtitle("Residual vs. Predicted value of Subway 2020 Ridership Regression Model")
+```
+
