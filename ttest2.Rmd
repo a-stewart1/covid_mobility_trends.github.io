@@ -13,8 +13,8 @@ output:
 
 We conducted a two-sample t-test to explore the difference in average subway ridership between 2019 and 2020. 
 
-```{r, include=FALSE, message=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r, include=FALSE}
+
 library(tidyverse)
 library(patchwork)
 library(readr)
@@ -24,15 +24,6 @@ library(viridis)
 library(reshape2)
 library(plotly)
 library(lubridate)
-
-knitr::opts_chunk$set(
-	echo = TRUE,
-	warning = FALSE,
-	fig.width = 8, 
-  fig.height = 6,
-  out.width = "90%"
-)
-
 options(
   ggplot2.continuous.colour = "viridis",
   ggplot2.continuous.fill = "viridis"
@@ -43,7 +34,6 @@ scale_fill_discrete = scale_fill_viridis_d
 
 theme_set(theme_minimal() + theme(legend.position = "bottom"))
 
-#Importing and cleaning data 
 mta_data = read_csv (file = "./data/MTA_recent_ridership_data_20201123_0.csv",
                      col_types = cols(
                        date = col_date(format = "%mm/%dd/%yy"),
@@ -73,17 +63,102 @@ mta_data = mta_data %>%
     )
 
 #change date to date format and order by date
-mta_data =
+plot_mta =
   mta_data %>%
   mutate(
     date= as.Date(date,format = "%m/%d")) %>%
   arrange(date)
+#create a text_label label
+text_label =
+  plot_mta %>%
+  mutate(text_label = str_c("percent change from 2019 to 2020: ", subway_pct_change)) %>%
+  select(date, text_label)
+
+#graph for subway 
+#pivoting
+plot_subway = 
+  plot_mta %>%
+  select(subway_2020, subway_2019, date) %>%
+  melt(., id.vars = "date") %>%
+#merge based on month 
+  merge(text_label, by = "date") %>%
+  #plotting
+  plot_ly(
+    x = ~date, y = ~value, type = "scatter", mode = "markers",
+    color = ~variable, text = ~text_label) %>%
+  layout (
+    title = "Subway Ridership Trends 2019 - 2020",
+    xaxis = list(title ="Month/Day", tickformat = "%m/%d"), #drop year
+    yaxis = list(title="Ridership"))  %>%
+  add_lines(x =as.Date("2020-03-01"), line = list(dash="dot", color = 'red', width=0.5, opacity = 0.5),name = 'First case on 3/1') %>%
+  add_lines(x =as.Date("2020-04-07"), line = list(dash="dot", color = 'red', width=0.5, alpha = 0.5),name = '100K cases in NYC on 04/07') %>%
+  add_lines(x =as.Date("2020-05-26"), line = list(dash="dot", color = 'red', width=0.5, alpha = 0.5),name = '200K cases in NYC on 05/26')
+#graph for bus
+
+#pivoting
+plot_bus = 
+  plot_mta %>%
+  select(bus_2020,bus_2019,date) %>%
+  melt(., id.vars = "date") %>% 
+#merge based on month 
+  merge(text_label, by = "date") %>%
+#plotting
+  plot_ly(
+    x = ~date, y = ~value, type = "scatter", mode = "markers",
+    color = ~variable, text = ~text_label) %>%
+  layout (
+    title = "Bus Ridership Trends 2019 - 2020",
+    xaxis = list(title ="Month/Day", tickformat = "%m/%d"),
+    yaxis = list(title="Ridership")) %>%
+  add_lines(x =as.Date("2020-03-01"), line = list(dash="dot", color = 'red', width=0.5, opacity = 0.5),name = 'First case on 3/1') %>%
+  add_lines(x =as.Date("2020-04-07"), line = list(dash="dot", color = 'red', width=0.5, alpha = 0.5),name = '100K cases in NYC on 04/07') %>%
+  add_lines(x =as.Date("2020-05-26"), line = list(dash="dot", color = 'red', width=0.5, alpha = 0.5),name = '200K cases in NYC on 05/26')
+
+#ggplot for subway
+plot_subway_2 = 
+  plot_mta %>%
+  select(subway_2020, subway_2019, date) %>%
+  melt(., id.vars = "date") %>%
+  ggplot(aes(x=date, y=value, color=variable)) +
+  geom_point(alpha=0.5) +
+  geom_smooth(se = FALSE)  +
+  xlab("Month/Day") +
+  ylab("Ridership") +
+  ggtitle("Subway Ridership Trends 2019 - 2020") +
+  geom_vline(xintercept=as.Date("2020-03-01"), linetype="dotted", color = 'red')+
+  geom_vline(xintercept=as.Date("2020-04-07"), linetype="dotted", color = 'red')+
+  geom_vline(xintercept=as.Date("2020-05-26"), linetype="dotted", color = 'red')+
+  geom_text(x=as.Date("2020-03-01"), y=6100000, label ="First case", angle=90, vjust = 1.2, size=3,color='black') +
+  geom_text(x=as.Date("2020-04-07"), y=6100000, label ='100K cases', angle=90, vjust = 1.2, size=3,color='black')+
+  geom_text(x=as.Date("2020-05-26"), y=6100000, label ='200K cases', angle=90, vjust = 1.2, size=3,color='black')
+
+#ggplot for bus
+plot_bus_2 = 
+  plot_mta %>%
+  select(bus_2020, bus_2019,date) %>%
+  melt(., id.vars = "date") %>% 
+  ggplot(aes(x=date, y=value, color=variable)) +
+  geom_point(alpha=0.5) +
+  geom_smooth(se = FALSE) +  
+  xlab("Month/Day") +
+  ylab("Ridership") +
+  ggtitle("Bus Ridership Trends 2019 - 2020") +
+  geom_vline(xintercept=as.Date("2020-03-01"), linetype="dotted", color = 'red')+
+  geom_vline(xintercept=as.Date("2020-04-07"), linetype="dotted", color = 'red')+
+  geom_vline(xintercept=as.Date("2020-05-26"), linetype="dotted", color = 'red')+
+  geom_text(x=as.Date("2020-03-01"), y=2400000, label ="First case", angle=90, vjust = 1.2, size=3,color='black') +
+  geom_text(x=as.Date("2020-04-07"), y=2400000, label ='100K cases', angle=90, vjust = 1.2, size=3,color='black')+
+  geom_text(x=as.Date("2020-05-26"), y=2400000, label ='200K cases', angle=90, vjust = 1.2, size=3,color='black')
+
+#see the two graphs together:
+plot_bus
+plot_subway
+(plot_bus_2+plot_subway_2)
 ```
 
 After converting the dates to an appropriate numeric format and calculating average ridership values per month, we created a dataframe to nest the observations for 2019 and 2020 subway ridership for each month. 
 
-```{r, results='hide', message=FALSE}
-#t-test set up 
+```{r, results='hide', message=FALSE, warning=FALSE}
 #separate by month and day
 mta_data = 
   mta_data %>%
@@ -105,7 +180,7 @@ mta_subway_ridership%>%knitr::kable()
 
 Next, we performed a t-test to check if the subway ridership was significantly different between 2019 and 2020 data by mapping across each month. We then compared the p-value obtained from the tests to determine whether the difference in ridership values was significant or not.
 
-```{r, results='hide', message=FALSE}
+```{r, results='hide', message=FALSE, warning=FALSE}
 mta_2019_sample = 
   mta_data%>%
   select(month, subway_2019) %>%
@@ -146,13 +221,11 @@ knitr::kable(mta_t_test, digits = 3)
 
 *Merged t-test results with the average ridership for each month.* 
 
-
-```{r, message=FALSE}
+```{r, message=FALSE, warning=FALSE}
 mta_year_ttest = 
   bind_cols(mta_subway_ridership, mta_t_test)%>%
   select(-month...4)%>%
   rename(month = month...1) 
-
 knitr::kable(mta_year_ttest)
 ```
 
@@ -160,7 +233,7 @@ The following plot was created using the final dataframe to depict average rider
 
 ### Figure 4. Monthly Average Ridership of Subway 2019 vs 2020
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 #create a text_label label
 text_label =
   mta_year_ttest %>%
@@ -188,6 +261,6 @@ plot_ly(
     yaxis = list(title="Average Ridership"))
 ```
 
-#### Results
+### Results 
 
-The results indicate that there is a statistically significant difference in subway ridership trends for the monts of March-November 2019 and 2020. 
+The results indicate that there is a statistically significant difference in subway ridership trends for the months of March-November 2019 and 2020. 
