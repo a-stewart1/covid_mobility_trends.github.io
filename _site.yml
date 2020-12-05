@@ -17,6 +17,8 @@ navbar:
           href: Analysis2.html
     - text: "Discussion"
       href: Discussion.html
+    - text: "Dashboard"
+      href: plotly.html
     - text: "Report"
       href: Report.html
     - icon: fa-github fa-lg

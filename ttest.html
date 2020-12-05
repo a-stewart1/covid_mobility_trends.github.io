@@ -26,7 +26,9 @@
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="site_libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
 <script src="site_libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
@@ -35,6 +37,15 @@
 <script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -391,6 +402,9 @@ div.tocify {
   <a href="Discussion.html">Discussion</a>
 </li>
 <li>
+  <a href="plotly.html">Dashboard</a>
+</li>
+<li>
   <a href="Report.html">Report</a>
 </li>
 <li>
@@ -589,8 +603,8 @@ plot_ly(
   layout (
     xaxis = list(title =&quot;Months&quot;,range=c(3,11)),
     yaxis = list(title=&quot;Average Ridership&quot;))</code></pre>
-<div id="htmlwidget-54e94c8d45d84d1a9a40" style="width:90%;height:576px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-54e94c8d45d84d1a9a40">{"x":{"visdat":{"13118267f7f8b":["function () ","plotlyVisDat"]},"cur_data":"13118267f7f8b","attrs":{"13118267f7f8b":{"x":{},"y":{},"mode":"lines+markers","text":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"Months","range":[3,11]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Average Ridership"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[3,4,5,6,7,8,9,10,11],"y":[4746353.22005047,4873551.36660661,4682924.48547445,4883863.21215357,4516651.67933839,4343573.05009655,4886223.17517515,4964619.88034507,4879757.68781309],"mode":"lines+markers","text":["p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant"],"type":"scatter","name":"2019","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[3,4,5,6,7,8,9,10,11],"y":[2381477.64516129,391671.7,493526.064516129,798982.6,1050498.61290323,1137601.22580645,1428918.63333333,1549459.32258065,1522150],"mode":"lines+markers","text":["p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant"],"type":"scatter","name":"2020","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9880da63df84e66e61bf" style="width:90%;height:576px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9880da63df84e66e61bf">{"x":{"visdat":{"f8043a78ab5e":["function () ","plotlyVisDat"]},"cur_data":"f8043a78ab5e","attrs":{"f8043a78ab5e":{"x":{},"y":{},"mode":"lines+markers","text":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"Months","range":[3,11]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Average Ridership"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[3,4,5,6,7,8,9,10,11],"y":[4746353.22005047,4873551.36660661,4682924.48547445,4883863.21215357,4516651.67933839,4343573.05009655,4886223.17517515,4964619.88034507,4879757.68781309],"mode":"lines+markers","text":["p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant"],"type":"scatter","name":"2019","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[3,4,5,6,7,8,9,10,11],"y":[2381477.64516129,391671.7,493526.064516129,798982.6,1050498.61290323,1137601.22580645,1428918.63333333,1549459.32258065,1522150],"mode":"lines+markers","text":["p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant","p-value: <0.001<br />Difference: significant"],"type":"scatter","name":"2020","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <div id="results" class="section level4">
 <h4>Results</h4>
 <p>The results indicate that there is a statistically significant difference in subway ridership trends for the monts of March-November 2019 and 2020.</p>
@@ -609,7 +623,7 @@ plot_ly(
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
