@@ -11,8 +11,8 @@ output:
 
 # Comparing Subway and Bus Ridership with Regression Modeling 
 
-"First we need to propose a regression model for subway ridership in 2020.
-As the outcome (subway ridership) is continuous, we can fit a linear regression model."
+Next, we proposed a regression model for subway ridership in 2020.
+As the outcome (subway ridership) is continuous, we fit a linear regression model.
 
 ```{r, include=FALSE}
 library(tidyverse)
@@ -116,7 +116,7 @@ subway_ridership %>%
   ggtitle(" Figure 5. Subway Ridership 2020 Regression")
 ```
 
-Now we will build a plot of model residuals against fitted values for subway ridership in 2020.
+Then, we built a plot of model residuals against fitted values for subway ridership in 2020.
 
 ```{r, message=FALSE}
 mta_data %>% 
@@ -128,9 +128,7 @@ mta_data %>%
     ggtitle("Figure 6. Residual vs. Predicted value of Subway 2020 Ridership Regression Model")
 ```
 
-Now, we need to propose a regression model for bus ridership in 2020.
-
-As the outcome (bus ridership) is continuous, we can fit a linear regression model.
+We then proposed a regression model for bus ridership in 2020. As the outcome (bus ridership) is continuous, we fit a linear regression model.
 
 ```{r, message=FALSE}
 bus_ridership = lm(bus_2020 ~ month, data = mta_data)
@@ -152,8 +150,7 @@ ggplot(mta_data, aes(month, bus_2020)) +
   ggtitle(" Figure 7. Bus Ridership 2020 Regression")
 ```
 
-
-* Next, we will build a plot of model residuals against fitted values for bus ridership in 2020.
+Next, we will built a plot of model residuals against fitted values for bus ridership in 2020.
 
 ```{r, message=FALSE}
 mta_data %>% 
