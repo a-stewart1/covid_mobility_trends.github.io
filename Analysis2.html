@@ -472,7 +472,8 @@ subway_ridership %&gt;%
        y = &quot;Residual&quot;) +
     ggtitle(&quot;Residual vs. Predicted value of Subway 2020 Ridership Regression Model&quot;)</code></pre>
 <p><img src="Analysis2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>Now, we need to propose a regression model for bus ridership in 2020. As the outcome (bus ridership) is continuous, we can fit a linear regression model.</p>
+<p>Now, we need to propose a regression model for bus ridership in 2020.</p>
+<p>As the outcome (bus ridership) is continuous, we can fit a linear regression model.</p>
 <pre class="r"><code>bus_ridership = lm(bus_2020 ~ month, data = mta_data)
 bus_ridership %&gt;% 
   broom::tidy() </code></pre>

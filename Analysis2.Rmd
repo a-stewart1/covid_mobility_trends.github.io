@@ -129,6 +129,7 @@ mta_data %>%
 ```
 
 Now, we need to propose a regression model for bus ridership in 2020.
+
 As the outcome (bus ridership) is continuous, we can fit a linear regression model.
 
 ```{r, message=FALSE}
