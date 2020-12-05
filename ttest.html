@@ -445,9 +445,9 @@ mta_subway_ridership =
     avg_subway_2019 = mean(subway_2019),
     avg_subway_2020 = mean(subway_2020)
   )
-mta_subway_ridership%&gt;%knitr::kable()
-
-mta_2019_sample = 
+mta_subway_ridership%&gt;%knitr::kable()</code></pre>
+<p>Next, we performed a t-test to check if the subway ridership was significantly different between 2019 and 2020 data by mapping across each month. We then compared the p-value obtained from the tests to determine whether the difference in ridership values was significant or not.</p>
+<pre class="r"><code>mta_2019_sample = 
   mta_data%&gt;%
   select(month, subway_2019) %&gt;%
   nest(subway_2019)%&gt;%
@@ -464,9 +464,9 @@ mta_2020_sample =
 mta_samples = 
   bind_cols(mta_2019_sample, mta_2020_sample)%&gt;%
   select(-month...3)%&gt;%
-  rename(month = month...1)</code></pre>
-<p>Next, we performed a t-test to check if the subway ridership was significantly different between 2019 and 2020 data by mapping across each month. We then compared the p-value obtained from the tests to determine whether the difference in ridership values was significant or not.</p>
-<pre class="r"><code>mta_t_test = 
+  rename(month = month...1)
+
+mta_t_test = 
   mta_samples%&gt;%
   mutate(t_test = map2(.x = subway_2019_sample, .y = subway_2020_sample, ~t.test(.x , .y) ),
          t_test_results = map(t_test, broom::tidy))%&gt;%
@@ -488,6 +488,7 @@ knitr::kable(mta_t_test, digits = 3)</code></pre>
   bind_cols(mta_subway_ridership, mta_t_test)%&gt;%
   select(-month...4)%&gt;%
   rename(month = month...1) 
+
 knitr::kable(mta_year_ttest)</code></pre>
 <table>
 <thead>
@@ -538,8 +539,8 @@ plot_ly(
     title = &quot;Monthly Average Ridership of Subway 2019 vs 2020&quot;,
     xaxis = list(title =&quot;Months&quot;,range=c(3,11)),
     yaxis = list(title=&quot;Average Ridership&quot;))</code></pre>
-<div id="htmlwidget-cbe1456aa049a33230d4" style="width:90%;height:576px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-cbe1456aa049a33230d4">{"x":{"visdat":{"112c28c8c099":["function () ","plotlyVisDat"]},"cur_data":"112c28c8c099","attrs":{"112c28c8c099":{"x":{},"y":{},"mode":"lines+markers","text":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Monthly Average Ridership of Subway 2019 vs 2020","xaxis":{"domain":[0,1],"automargin":true,"title":"Months","range":[3,11]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Average Ridership"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[2020],"y":[4747840.86273214],"mode":"lines+markers","text":"p-value: <0.001<br />Difference: significant","type":"scatter","name":"2019","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2020],"y":[1188754.05597015],"mode":"lines+markers","text":"p-value: <0.001<br />Difference: significant","type":"scatter","name":"2020","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b1f410816645c68764ae" style="width:90%;height:576px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b1f410816645c68764ae">{"x":{"visdat":{"154e3a590527":["function () ","plotlyVisDat"]},"cur_data":"154e3a590527","attrs":{"154e3a590527":{"x":{},"y":{},"mode":"lines+markers","text":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Monthly Average Ridership of Subway 2019 vs 2020","xaxis":{"domain":[0,1],"automargin":true,"title":"Months","range":[3,11]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Average Ridership"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[2020],"y":[4747840.86273214],"mode":"lines+markers","text":"p-value: <0.001<br />Difference: significant","type":"scatter","name":"2019","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2020],"y":[1188754.05597015],"mode":"lines+markers","text":"p-value: <0.001<br />Difference: significant","type":"scatter","name":"2020","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <div id="results" class="section level4">
 <h4>Results</h4>
 <p>The results indicate that there is a statistically significant difference in subway ridership trends for the monts of March-November 2019 and 2020.</p>

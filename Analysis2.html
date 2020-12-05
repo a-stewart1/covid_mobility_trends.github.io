@@ -26,19 +26,8 @@
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -428,8 +417,120 @@ div.tocify {
 
 
 <p><br></p>
-<div id="regression" class="section level1">
-<h1>Regression</h1>
+<div id="comparing-subway-and-bus-ridership-with-regression-modeling" class="section level1">
+<h1>Comparing Subway and Bus Ridership with Regression Modeling</h1>
+<p>“First we need to propose a regression model for subway ridership in 2020. As the outcome (subway ridership) is continuous, we can fit a linear regression model.”</p>
+<pre class="r"><code>subway_ridership = lm(subway_2020 ~ month, data = mta_data)
+
+subway_ridership %&gt;% 
+  broom::tidy() </code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic       p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+## 1 (Intercept)  965080.   160401.      6.02 0.00000000587
+## 2 month         32473.    21860.      1.49 0.139</code></pre>
+<pre class="r"><code>#to tidy the output and get only the intercept, slope and p-values 
+subway_ridership %&gt;% 
+  broom::tidy() %&gt;% 
+  select(term, estimate, p.value) %&gt;% 
+  knitr::kable(digits = 3)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">965079.87</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">month</td>
+<td align="right">32472.74</td>
+<td align="right">0.139</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#to plot for regression line 
+  ggplot(mta_data, aes(month, subway_2020)) +
+  geom_point() +
+  stat_smooth(method = lm)+
+   xlab(&quot;Month in 2020&quot;) +
+  ylab(&quot;Subway Ridership&quot;) +
+  ggtitle(&quot;Subway Ridership 2020 Regression&quot;)</code></pre>
+<p><img src="Analysis2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Now we will build a plot of model residuals against fitted values for subway ridership in 2020.</p>
+<pre class="r"><code>mta_data %&gt;% 
+  modelr::add_predictions(subway_ridership) %&gt;% 
+  modelr::add_residuals(subway_ridership) %&gt;% 
+  ggplot(aes(x = pred, y = resid)) + geom_point() + 
+  labs(x = &quot;Predicted value&quot;, 
+       y = &quot;Residual&quot;) +
+    ggtitle(&quot;Residual vs. Predicted value of Subway 2020 Ridership Regression Model&quot;)</code></pre>
+<p><img src="Analysis2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Now, we need to propose a regression model for bus ridership in 2020. As the outcome (bus ridership) is continuous, we can fit a linear regression model.</p>
+<pre class="r"><code>bus_ridership = lm(bus_2020 ~ month, data = mta_data)
+bus_ridership %&gt;% 
+  broom::tidy() </code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)  717060.    64077.     11.2  4.46e-24
+## 2 month         26325.     8733.      3.01 2.82e- 3</code></pre>
+<pre class="r"><code>#Now we need to tidy the output and get only the intercept, slope and p-values 
+bus_ridership %&gt;% 
+  broom::tidy() %&gt;% 
+  select(term, estimate, p.value) %&gt;% 
+  knitr::kable(digits = 3)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">717060.27</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">month</td>
+<td align="right">26324.69</td>
+<td align="right">0.003</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#to plot for regression line
+ggplot(mta_data, aes(month, bus_2020)) +
+  geom_point() +
+  stat_smooth(method = lm)+
+   xlab(&quot;Month in 2020&quot;) +
+  ylab(&quot;Bus Ridership&quot;) +
+  ggtitle(&quot;Bus Ridership 2020 Regression&quot;)</code></pre>
+<p><img src="Analysis2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<ul>
+<li>Next, we will build a plot of model residuals against fitted values for bus ridership in 2020.</li>
+</ul>
+<pre class="r"><code>mta_data %&gt;% 
+  modelr::add_predictions(bus_ridership) %&gt;% 
+  modelr::add_residuals(bus_ridership) %&gt;% 
+  ggplot(aes(x = pred, y = resid)) + geom_point() + 
+  labs(x = &quot;Predicted value&quot;, 
+       y = &quot;Residual&quot;)</code></pre>
+<p><img src="Analysis2_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code>ggtitle(&quot;Residual vs. Predicted value of Subway 2020 Ridership Regression Model&quot;)</code></pre>
+<pre><code>## $title
+## [1] &quot;Residual vs. Predicted value of Subway 2020 Ridership Regression Model&quot;
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;labels&quot;</code></pre>
 </div>
 
 
@@ -443,7 +544,7 @@ div.tocify {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
