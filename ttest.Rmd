@@ -101,11 +101,7 @@ mta_subway_ridership =
     avg_subway_2020 = mean(subway_2020)
   )
 mta_subway_ridership%>%knitr::kable()
-```
 
-Next, we performed a t-test to check if the subway ridership was significantly different between 2019 and 2020 data by mapping across each month. We then compared the p-value obtained from the tests to determine whether the difference in ridership values was significant or not.
-
-```{r, results='hide', message=FALSE}
 mta_2019_sample = 
   mta_data%>%
   select(month, subway_2019) %>%
@@ -124,7 +120,11 @@ mta_samples =
   bind_cols(mta_2019_sample, mta_2020_sample)%>%
   select(-month...3)%>%
   rename(month = month...1)
+```
 
+Next, we performed a t-test to check if the subway ridership was significantly different between 2019 and 2020 data by mapping across each month. We then compared the p-value obtained from the tests to determine whether the difference in ridership values was significant or not.
+
+```{r, results='hide', message=FALSE}
 mta_t_test = 
   mta_samples%>%
   mutate(t_test = map2(.x = subway_2019_sample, .y = subway_2020_sample, ~t.test(.x , .y) ),
@@ -152,7 +152,6 @@ mta_year_ttest =
   bind_cols(mta_subway_ridership, mta_t_test)%>%
   select(-month...4)%>%
   rename(month = month...1) 
-
 knitr::kable(mta_year_ttest)
 ```
 
@@ -160,7 +159,7 @@ The following plot was created using the final dataframe to depict average rider
 
 ### Figure 4. Monthly Average Ridership of Subway 2019 vs 2020
 
-```{r}
+```{r message=FALSE}
 #create a text_label label
 text_label =
   mta_year_ttest %>%
@@ -190,4 +189,4 @@ plot_ly(
 
 #### Results
 
-The results indicate that there is a statistically significant difference in subway ridership trends for the monts of March-November 2019 and 2020. 
+The results indicate that there is a statistically significant difference in subway ridership trends for the months of March-November 2019 and 2020. 
