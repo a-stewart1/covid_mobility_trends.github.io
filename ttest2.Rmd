@@ -229,9 +229,8 @@ mta_year_ttest =
 knitr::kable(mta_year_ttest)
 ```
 
-The following plot was created using the final dataframe to depict average ridership for each month comparing 2019 and 2020. The labels that appear at each data point as you hover over them provides additional information about the significance or lack of significant in ridership difference. 
+The following plot was created using the final data frame to depict average ridership for each month comparing 2019 and 2020. The labels that appear at each data point as you hover over them provide additional information about the significance or lack of significance in ridership difference. 
 
-### Figure 4. Monthly Average Ridership of Subway 2019 vs 2020
 
 ```{r, message=FALSE, warning=FALSE}
 #create a text_label label
@@ -256,12 +255,12 @@ plot_ly(
     x = ~month, y = ~value, type = "scatter", mode = "lines+markers",
     color = ~variable, text = ~text_label) %>%
   layout (
-    title = "Monthly Average Ridership of Subway 2019 vs 2020",
+    title = "Figure 4. Monthly Average Ridership of Subway 2019 vs 2020",
     xaxis = list(title ="Months",range=c(3,11)),
     yaxis = list(title="Average Ridership"))
 ```
 
 ### Results 
 
-The results indicate that there is a statistically significant difference in subway ridership trends for the months of March-November 2019 and 2020. 
+The results indicate that there is a statistically significant difference (p <.001) in subway ridership trends across all months(March-November)in 2019 and 2020. 
 

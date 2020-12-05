@@ -14,28 +14,35 @@ output:
 
 *Contributors: Julián Ponce, Michelle Lee, Adarsh Ramakrishnan, Allison Stewart, Aishwarya Anuraj*
 
+# About 
+
+![](images/200430-new-york-subway-ew-1235p_08a2968cb59418529191b5d2bd30de9c.fit-760w.jpg){width=75%} 
+
 ### Motivation
 
-The central artery of New York City, the public transportation system is central to the cultural and economic well-being. Among its usual million daily users such as hip hop dancers, Wall Street executives, and the famous [pizza rat](https://www.cnn.com/2015/09/22/living/pizza-rat-feat/index.html), the subway proves to be more than a means of transport; it is a way of life. 
+  The central artery of New York City, the public transportation system is central to the city's cultural and economic well-being. Among its usual million daily users such as hip hop dancers, Wall Street executives, and the famous [pizza rat](https://www.cnn.com/2015/09/22/living/pizza-rat-feat/index.html), the subway proves to be more than a means of transport; it is a way of life. 
 
-Unfortunately, the COVID-19 pandemic and the “New York State on PAUSE” executive order, issued on March 14, 2020 aimed to slow the spread of the virus, brought tremendous shock to the normal bustle of New York City. Closed museums, theaters, restaurants, and suspended commutes have created ghost town-like scenes and some people to proclaim that New York City is [“over”](https://www.nytimes.com/2020/08/25/nyregion/nyc-coronavirus-reopening.html?searchResultPosition=43) as we know it. 
+  Unfortunately, the COVID-19 pandemic and the “New York State on PAUSE” executive order, issued on March 14, 2020 aimed to slow the spread of the virus, brought tremendous shock to the normal bustle of New York City. Closed museums, theaters, restaurants, and suspended commutes have created ghost town-like scenes and some people to proclaim that New York City is [“over”](https://www.nytimes.com/2020/08/25/nyregion/nyc-coronavirus-reopening.html?searchResultPosition=43) as we know it. 
 
-This project moves forward with the aim of understanding the influence of the COVID-19 pandemic on human mobility trends in NYC as measured by MTA ridership on subway trains and buses from March to December 2019 and 2020.  
+  This project moves forward with the aim of understanding the influence of the COVID-19 pandemic on mobility trends in NYC as measured by MTA ridership on subway trains and buses from March to November 2019 and 2020. 
+
+### Related Work 
+
+  Understanding trends in ridership is important as it may be associated with COVID-19 transmission as well as economic implications such as decreased consumer spending. 
+[Past studies](https://covid-mobility.stanford.edu/) have predicted higher infection rates among disadvantaged racial and socioeconomic groups solely from differences in mobility data. [Similar studies](https://visualization.covid19mobility.org/?date=2020-11-26&dates=2020-08-26_2020-11-26&region=36) have focused on mobility trends at the county level and fail to look at mobility trends by mode of transportation. Our study adds to this important topic as it compares mobility trends by mode of transportation (bus, subway etc.). 
+
+  Understanding this important issue could provide insight to policymakers, transit authorities, and health departments as they make decisions related to transmission of COVID-19 and modifications to public transportation systems in light of stay-at-home orders.
 
 
-### Related work
+### Research Questions: 
 
-Understanding trends in ridership is important as it may be associated with COVID-19 transmission as well as economic implications such as consumer spending. [Past studies](https://covid-mobility.stanford.edu/) have predicted higher infection rates among disadvantaged racial and socioeconomic groups solely from differences in mobility data. [Similar studies](https://visualization.covid19mobility.org/?date=2020-11-26&dates=2020-08-26_2020-11-26&region=36) have focused on mobility trends at the county level and fail to look at mobility trends by sector. Our study adds to this important topic as it compares mobility trends by means of transportation (bus, subway). 
+* How has the COVID-19 pandemic influenced trends in subway and bus ridership in NYC from March to November 2020? 
 
-Understanding this important issue could provide insight to policymakers, transit authorities, and health departments as they make decisions related to transmission of COVID-19 and modifications to public transportation systems in light of stay-at-home orders.
-  
-### Research Questions 
+* Does average MTA subway ridership from March to November 2019 differ from MTA subway ridership from March to November 2020?
 
-* Does average MTA subway ridership March-December 2019 differ from average MTA subway ridership March-December 2020?
-* Does subway ridership differ from bus ridership during the COVID-19 pandemic (March to December 2020)?
+* Does subway ridership differ from bus ridership during the COVID-19 pandemic (March to November 2020)?
 
-We initially wanted to explore mobility trends by borough and expand our means of transportation to air traffic. However, we did not find adequate information on mobility trends at the borough level and realized that adding air traffic would be a bit overwhelming for the scope of this project. We identified Apple Mobility Trend data as a potential source but ultimately decided to use MTA data due to more appropriate variables. The Apple data only provided percentage change values and not the crude number of ridership, which was important for our visualization and statistical tests. Additionally, we expected to explore trends for the whole calendar year and were limited by only having available data from March to December. 
-
+We initially wanted to explore mobility trends by borough and expand our means of transportation to air traffic. However, we did not find adequate information on mobility trends at the borough level and realized that adding air traffic would be a bit overwhelming for the scope of this project. We identified Apple Mobility Trend data as a potential source but ultimately decided to use MTA data due to more appropriate variables. The Apple data only provided percentage change values and not the crude number of ridership, which was important for our visualization and statistical tests. Additionally, we expected to explore trends for the whole calendar year and were limited by only having available data from March to November. 
 
 ### Data
 
@@ -279,15 +286,24 @@ plot_bus
 plot_subway
 
 (plot_bus_2+plot_subway_2 + plot_annotation(
-  title = 'Figure 3. Bus and Subway Ridership Trends 2019-2020', theme = theme(plot.title = element_text(size = 24)
+  title = 'Figure 3. Bus and Subway Ridership Trends 2019-2020', theme = theme(plot.title = element_text(size = 20)
 )))
 ```
 
-From these plots, we can see that the ridership values in March 2020 are similar to those of ridership in March 2019 for both buses and subways. However, from mid-March onward there are overall reduced ridership trends in 2020 as compared to 2019 for both forms of transit. These trends in reduced ridership align with the "New York on PAUSE" executive order, which caused many people to stop using public transportation.  
+__Highlights:__ 
 
-In the first plot of bus ridership trends, there appears to be a continuous drop in ridership between the first COVID-19 case on March 1, 2020 and April 1, 2020. This trend is followed by an increase in ridership in April through July 2020 and then subsequently a broadening of the range of values around August 2020, with some reductions in values and others remaining generally constant. From the 2019 estimates, we also notice many outlying lower values, produced by decreased bus ridership on Thursdays and Fridays. This is likely a result of fewer commuters on those days. 
+* __Overall reduction in bus and subway ridership in 2020 compared to 2019__
 
-The trends in subway ridership, as depicted by the second plot, show some similarities to the bus ridership trends, although there are fewer overlapping values when comparing the years 2019 and 2020. The increase in subway ridership, beginning around April 2020 is also less extreme than the increase in bus ridership and there is a more narrow range of values in the 2020 subway ridership as compared to bus ridership. Finally, the 2020 subway ridership does not appear to be decreasing in recent months as with bus ridership. These trends suggest that as people began to use public transportation again during the pandemic, fewer people chose to use the subway as compared to buses. 
+* __Substantial drop in bus and subway ridership from March to April 2020__
+
+* __Fewer people chose to use the subway as compared to buses after April, 2020__
+
+
+In Figure 1., which shows trends in bus ridership, there appears to be a continuous drop in ridership between the first COVID-19 case on March 1, 2020 and April 1, 2020. This trend is followed by an increase in ridership in April through July 2020 and then subsequently a broadening of the range of values around August 2020, with some reductions in values and others remaining generally constant. From the 2019 estimates, we also notice many outlying lower values, produced by decreased bus ridership on Thursdays and Fridays. This is likely a result of fewer commuters on those days. 
+
+In Figure 2., which shows trends in subway ridership, there appears to be similarities to the bus ridership trends from Figure 1. However, there are fewer overlapping values when comparing the years 2019 and 2020. The increase in subway ridership, beginning around April 2020 is also less extreme than the increase in bus ridership and there is a more narrow range of values in the 2020 subway ridership as compared to bus ridership. Finally, the 2020 subway ridership does not appear to be decreasing in recent months as with bus ridership. These trends suggest that as people began to use public transportation again during the pandemic, fewer people chose to use the subway as compared to buses. 
+ 
+In Figure 3. we observe that from mid-March onward there are overall reduced ridership trends in 2020 as compared to 2019 for both forms of transit. 
 
 ### Additional Analysis 
 
@@ -509,7 +525,7 @@ mta_year_ttest =
 knitr::kable(mta_year_ttest)
 ```
 
-The following plot was created using the final dataframe to depict average ridership for each month comparing 2019 and 2020. The labels that appear at each data point as you hover over them provides additional information about the significance or lack of significant in ridership difference. 
+The following plot was created using the final data frame to depict average ridership for each month comparing 2019 and 2020. The labels that appear at each data point as you hover over them provide additional information about the significance or lack of significance in ridership difference. 
 
 ### Figure 4. Monthly Average Ridership of Subway 2019 vs 2020
 
@@ -543,7 +559,10 @@ plot_ly(
 
 ### Results 
 
-The results indicate that there is a statistically significant difference in subway ridership trends for the months of March-November 2019 and 2020.
+The results indicate that there is a statistically significant difference (p <.001) in subway ridership trends across all months(March-November)in 2019 and 2020. 
+
+
+# Comparing Subway and Bus Ridership with Regression Modeling 
 
 Next, we proposed a regression model for subway ridership in 2020.
 As the outcome (subway ridership) is continuous, we fit a linear regression model.
@@ -715,6 +734,21 @@ These trends in reduced ridership align with the “New York on PAUSE” executi
 T Tests
 The results indicate that there is a statistically significant difference in subway ridership trends for the months of March-November 2019 and 2020.
 
+### Summary & Discussion 
+
+Initially, the ridership values in early March 2020 were comparable to those of ridership in March 2019 for both buses and subways. However, from mid-March onward, there are overall reduced ridership trends in 2020 as compared to 2019 for both forms of transit.
+
+We had hypothesized that the average MTA subway ridership in 2020 was significantly different from that of 2019, mainly due to COVID-19 restrictions. Our t-test analysis (see below) indicated a significant difference (p<0.0001) for the months of March - November in 2019 and 2020. Hence, at the 0.05 significance level, our t-test showed significant changes for all months in March - November 2020, from the same time frame in 2019, regarding subway ridership. Secondly, through our regression analysis, we further observed that (add interpretation for regression).
+
+<img src = "./Images/ttest_results.png" style="width:50%">
+
+Furthermore, the graph below shows the ridership trends for bus and subway between 2019 and 2020, which can help us better understand and see the changes in MTA ridership since the COVID-19 pandemic.
+
+<img src = "./Images/mta_graph.png" style="width:75%">
+
+As seen above, while the MTA ridership at the beginning of 2020 is comparable to those of 2019, there is a steep decline in ridership starting late March/ Early April. This could be due to (1) the statewide PAUSE order where people who were not essential workers did not use MTA to commute to work,(2) closing of schools, in which millions of students use MTA to go to school, and (3) decline in tourism. We can observe an increase in ridership for both subway and bus, starting early June. This could be due to (1) people are going back to school and work, and (2) people feel comfortable using public transportation as the rates of infection in New York City slowed down, compared to March - late May, where we reached 200,000 cumulative cases for COVID-19 within 50 days. 
+
+Further studies can examine what are the factors that led to an increase in ridership since June, such as hospital-bed availability, infection rates, state-wide restrictions (work, school), and policy changes.
 
 
 

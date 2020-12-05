@@ -11,9 +11,6 @@ output:
 
 # Comparing Subway and Bus Ridership with Regression Modeling 
 
-First we need to propose a regression model for subway ridership in 2020.
-As the outcome (subway ridership) is continuous, we can fit a linear regression model.
-
 Next, we proposed a regression model for subway ridership in 2020.
 As the outcome (subway ridership) is continuous, we fit a linear regression model.
 
@@ -120,7 +117,7 @@ subway_ridership %>%
   ggtitle(" Figure 5. Subway Ridership 2020 Regression")
 ```
 
-Then, we built a plot of model residuals against fitted values for subway ridership in 2020.
+We built a plot of model residuals against fitted values for subway ridership in 2020.
 
 ```{r, message=FALSE}
 mta_data %>% 

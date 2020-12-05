@@ -203,16 +203,25 @@ plot_ly(
 ```
 
 ### Chart 2
-```{r, echo = FALSE, warning=FALSE}
-reg_mta = 
-mta_data %>% 
-  modelr::add_predictions(subway_ridership) %>% 
-  modelr::add_residuals(subway_ridership) %>% 
-  ggplot(aes(x = pred, y = resid)) + geom_point() + 
-  labs(x = "Predicted value", 
-       y = "Residual") +
-    ggtitle("Residual vs. Predicted value of Subway 2020 Ridership Regression Model")
-ggplotly(reg_mta)
+```{r, echo = FALSE, warning=FALSE, message=FALSE}
+subway_ridership = lm(subway_2020 ~ month, data = mta_data)
+
+subway_ridership %>% 
+  broom::tidy() 
+
+#to tidy the output and get only the intercept, slope and p-values 
+subway_ridership %>% 
+  broom::tidy() %>% 
+  select(term, estimate, p.value) %>% 
+  knitr::kable(digits = 3)
+
+#to plot for regression line 
+  ggplot(mta_data, aes(month, subway_2020)) +
+  geom_point() +
+  stat_smooth(method = lm)+
+   xlab("Month in 2020") +
+  ylab("Subway Ridership") +
+  ggtitle(" Figure 5. Subway Ridership 2020 Regression")
 ```
 
 Row

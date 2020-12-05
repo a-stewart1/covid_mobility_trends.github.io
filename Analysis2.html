@@ -416,7 +416,6 @@ div.tocify {
 <p><br></p>
 <div id="comparing-subway-and-bus-ridership-with-regression-modeling" class="section level1">
 <h1>Comparing Subway and Bus Ridership with Regression Modeling</h1>
-<p>First we need to propose a regression model for subway ridership in 2020. As the outcome (subway ridership) is continuous, we can fit a linear regression model.</p>
 <p>Next, we proposed a regression model for subway ridership in 2020. As the outcome (subway ridership) is continuous, we fit a linear regression model.</p>
 <pre class="r"><code>subway_ridership = lm(subway_2020 ~ month, data = mta_data)
 
@@ -461,7 +460,7 @@ subway_ridership %&gt;%
   ylab(&quot;Subway Ridership&quot;) +
   ggtitle(&quot; Figure 5. Subway Ridership 2020 Regression&quot;)</code></pre>
 <p><img src="Analysis2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>Then, we built a plot of model residuals against fitted values for subway ridership in 2020.</p>
+<p>We built a plot of model residuals against fitted values for subway ridership in 2020.</p>
 <pre class="r"><code>mta_data %&gt;% 
   modelr::add_predictions(subway_ridership) %&gt;% 
   modelr::add_residuals(subway_ridership) %&gt;% 
