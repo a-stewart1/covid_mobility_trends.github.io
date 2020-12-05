@@ -9,4 +9,4 @@ output:
 <br>
 
 # Discussion 
-
+What were your findings? Are they what you expect? What insights into the data can you make?
