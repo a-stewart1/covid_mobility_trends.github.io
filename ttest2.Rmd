@@ -14,7 +14,6 @@ output:
 We conducted a two-sample t-test to explore the difference in average subway ridership between 2019 and 2020. 
 
 ```{r, include=FALSE}
-
 library(tidyverse)
 library(patchwork)
 library(readr)
@@ -177,10 +176,7 @@ mta_subway_ridership =
   )
 mta_subway_ridership%>%knitr::kable()
 
-<<<<<<< HEAD:ttest2.Rmd
-```{r, results='hide', message=FALSE, warning=FALSE}
-=======
->>>>>>> 223690a65e884b1b3e785cd764b15c2b600f254f:ttest.Rmd
+
 mta_2019_sample = 
   mta_data%>%
   select(month, subway_2019) %>%
@@ -237,11 +233,7 @@ The following plot was created using the final dataframe to depict average rider
 
 ### Figure 4. Monthly Average Ridership of Subway 2019 vs 2020
 
-<<<<<<< HEAD:ttest2.Rmd
 ```{r, message=FALSE, warning=FALSE}
-=======
-```{r message=FALSE}
->>>>>>> 223690a65e884b1b3e785cd764b15c2b600f254f:ttest.Rmd
 #create a text_label label
 text_label =
   mta_year_ttest %>%
@@ -271,8 +263,5 @@ plot_ly(
 
 ### Results 
 
-<<<<<<< HEAD:ttest2.Rmd
 The results indicate that there is a statistically significant difference in subway ridership trends for the months of March-November 2019 and 2020. 
-=======
-The results indicate that there is a statistically significant difference in subway ridership trends for the months of March-November 2019 and 2020. 
->>>>>>> 223690a65e884b1b3e785cd764b15c2b600f254f:ttest.Rmd
+
