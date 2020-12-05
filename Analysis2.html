@@ -416,7 +416,7 @@ div.tocify {
 <p><br></p>
 <div id="comparing-subway-and-bus-ridership-with-regression-modeling" class="section level1">
 <h1>Comparing Subway and Bus Ridership with Regression Modeling</h1>
-<p>“First we need to propose a regression model for subway ridership in 2020. As the outcome (subway ridership) is continuous, we can fit a linear regression model.”</p>
+<p>First we need to propose a regression model for subway ridership in 2020. As the outcome (subway ridership) is continuous, we can fit a linear regression model.</p>
 <pre class="r"><code>subway_ridership = lm(subway_2020 ~ month, data = mta_data)
 
 subway_ridership %&gt;% 
@@ -521,14 +521,9 @@ ggplot(mta_data, aes(month, bus_2020)) +
   modelr::add_residuals(bus_ridership) %&gt;% 
   ggplot(aes(x = pred, y = resid)) + geom_point() + 
   labs(x = &quot;Predicted value&quot;, 
-       y = &quot;Residual&quot;)</code></pre>
+       y = &quot;Residual&quot;) +
+ggtitle(&quot;Figure 8. Residual vs. Predicted value of Subway 2020 Ridership Regression Model&quot;)</code></pre>
 <p><img src="Analysis2_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<pre class="r"><code>ggtitle(&quot;Residual vs. Predicted value of Subway 2020 Ridership Regression Model&quot;)</code></pre>
-<pre><code>## $title
-## [1] &quot;Residual vs. Predicted value of Subway 2020 Ridership Regression Model&quot;
-## 
-## attr(,&quot;class&quot;)
-## [1] &quot;labels&quot;</code></pre>
 <div id="results" class="section level3">
 <h3>Results</h3>
 <ul>
